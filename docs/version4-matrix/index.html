@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antoine JACROT - Matrix CV (pas Neo, juste un gars curieux)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="matrix-container" id="main-container">
+        <div class="glitch-title" data-text="ANTOINE JACROT">ANTOINE JACROT</div>
+        <div class="subtitle">EXPERT TECHNIQUE (enfin le titre!)</div>
+
+        <div class="choice-container" id="choice-container">
+            <h2>Choisissez votre pilule...</h2>
+            <div class="pills">
+                <button class="pill blue-pill" id="blue-pill">
+                    <span class="pill-icon">💊</span>
+                    <span>Pilule Bleue</span>
+                    <small>Retourner au CV classique</small>
+                </button>
+                <button class="pill red-pill" id="red-pill">
+                    <span class="pill-icon">💊</span>
+                    <span>Pilule Rouge</span>
+                    <small>Voir la vérité</small>
+                </button>
+            </div>
+        </div>
+
+        <!-- White Rabbit -->
+        <div class="white-rabbit" id="white-rabbit">
+            🐰
+            <div class="rabbit-tooltip">Follow me...</div>
+        </div>
+
+        <!-- CV Content (hidden initially) -->
+        <div class="cv-content hidden" id="cv-content">
+            <div class="morpheus-message">
+                <p>"Avez-vous pensé à élargir vos critères de recherche?"</p>
+                <p class="morpheus-signature">- France Travail</p>
+            </div>
+
+            <div class="matrix-sections">
+                <!-- About Section -->
+                <section class="matrix-section">
+                    <h2 class="section-title glitch" data-text="// QUI SUIS-JE ?">// QUI SUIS-JE ?</h2>
+                    <div class="section-content">
+                        <p class="neon-text">
+                            Il y a une rumeur chez Savoye...<br>
+                            <strong>"Il n'y a qu'un seul qui lit les traces LMWCS... parce que personne d'autre ne veut s'y coller."</strong>
+                        </p>
+                        <p>
+                            Autodidacte avec 14 ans d'expérience en systèmes logistiques.
+                            Vision transverse... ou peut-etre juste de la curiosite mal placee.
+                            Esprit pragmatique qui automatise des trucs que personne n'a demandes.
+                        </p>
+                        <div class="matrix-quote">
+                            <span class="quote-mark">"</span>
+                            <p>Tu es... euh... celui qui reste jusqu'a 22h pour debugger, Antoine.<br>
+                            Les traces LMWCS te parlent. Les collegues, un peu moins.</p>
+                            <span class="quote-mark">"</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Experience Section -->
+                <section class="matrix-section">
+                    <h2 class="section-title glitch" data-text="// MISSIONS">// MISSIONS</h2>
+                    <div class="section-content">
+                        <div class="timeline-item">
+                            <div class="timeline-date">2025 - Present</div>
+                            <h3>Expert Technique <span class="company">@ Savoye</span></h3>
+                            <ul>
+                                <li>👁️ Referent technique - Je vois des bugs partout (meme la ou il n'y en a pas)</li>
+                                <li>🎯 Support niveau 3 - Quand personne ne sait, on m'appelle</li>
+                                <li>⚡ Force de proposition - Je propose, on me dit "plus tard"</li>
+                            </ul>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">2012 - 2025</div>
+                            <h3>Ingenieur Support <span class="company">@ Savoye</span></h3>
+                            <ul>
+                                <li>🔍 Lecture traces LMWCS - Competence que personne ne m'envie</li>
+                                <li>📊 Monitoring proactif - Je cree des alertes avant les problemes</li>
+                                <li>🤖 Automatisation - Des bots que personne n'a demandes mais que tout le monde utilise</li>
+                                <li>💻 PL/SQL, C, Java, MongoDB, Talend, Perl - J'accumule les langages comme d'autres les timbres</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Packages Section (Logistique) -->
+                <section class="matrix-section">
+                    <h2 class="section-title glitch" data-text="// PACKAGES IN THE MATRIX">// PACKAGES IN THE MATRIX</h2>
+                    <div class="section-content">
+                        <div id="packages-container" class="packages-container">
+                            <!-- Packages will be generated by JS -->
+                        </div>
+                        <div class="packages-stats">
+                            <div class="stat">
+                                <span class="stat-label">Taux de succès</span>
+                                <span class="stat-value neon-text">99.8%</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Systèmes</span>
+                                <span class="stat-value">WMS | WCS | TMS | OMS</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Projects Section -->
+                <section class="matrix-section">
+                    <h2 class="section-title glitch" data-text="// PROJETS TECHNIQUES">// PROJETS TECHNIQUES</h2>
+                    <div class="section-content">
+                        <div class="project-grid">
+                            <div class="project-card">
+                                <div class="project-icon">🤖</div>
+                                <h3>Bots Industrialisés</h3>
+                                <p>Alertes et automatisation pour communauté d'utilisateurs</p>
+                            </div>
+                            <div class="project-card">
+                                <div class="project-icon">📊</div>
+                                <h3>Monitoring Proactif</h3>
+                                <p>Solutions Centreon et automatisation système</p>
+                            </div>
+                            <div class="project-card">
+                                <div class="project-icon">🏠</div>
+                                <h3>Projets Personnels</h3>
+                                <p>Domotique, mining, IoT</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Skills Section -->
+                <section class="matrix-section">
+                    <h2 class="section-title glitch" data-text="// ABILITIES">// ABILITIES</h2>
+                    <div class="section-content">
+                        <div class="abilities">
+                            <div class="ability">
+                                <div class="ability-name">Vision Systemique 👁️</div>
+                                <div class="ability-bar">
+                                    <div class="ability-fill" style="width: 85%"></div>
+                                </div>
+                                <small class="ability-note">Je vois les connexions (parfois imaginaires)</small>
+                            </div>
+                            <div class="ability special-ability">
+                                <div class="ability-name">Lecture Traces LMWCS 🎯</div>
+                                <div class="ability-bar">
+                                    <div class="ability-fill neon-fill" style="width: 100%"></div>
+                                </div>
+                                <small class="ability-note">★ Competence que personne ne m'envie</small>
+                            </div>
+                            <div class="ability">
+                                <div class="ability-name">Proactivite ⚡</div>
+                                <div class="ability-bar">
+                                    <div class="ability-fill" style="width: 90%"></div>
+                                </div>
+                                <small class="ability-note">J'automatise avant qu'on me le demande</small>
+                            </div>
+                            <div class="ability">
+                                <div class="ability-name">Pragmatisme Creatif 💡</div>
+                                <div class="ability-bar">
+                                    <div class="ability-fill" style="width: 75%"></div>
+                                </div>
+                                <small class="ability-note">Solutions moches mais qui marchent</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Section -->
+                <section class="matrix-section">
+                    <h2 class="section-title glitch" data-text="// CONTACT">// CONTACT</h2>
+                    <div class="section-content">
+                        <div class="contact-grid">
+                            <div class="contact-item">
+                                <span class="contact-icon">📍</span>
+                                <span>Marcigny (71)</span>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-icon">📧</span>
+                                <span id="email-mirror-mx" style="filter: blur(3px); cursor: pointer;" onclick="revealEmailMirror()">moc.liamg@torcaj.eniotna</span>
+                                <span style="cursor: pointer;" onclick="revealEmailMirror()"> 🪞</span>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-icon">📱</span>
+                                <span id="tel-mirror-mx" style="filter: blur(3px); cursor: pointer;" onclick="revealTelMirror()">8️⃣0️⃣ 3️⃣5️⃣ 4️⃣5️⃣ 3️⃣4️⃣ 6️⃣0️⃣</span>
+                                <span style="cursor: pointer;" onclick="revealTelMirror()"> 🪞</span>
+                            </div>
+                            <div class="contact-item" style="font-size: 0.8rem; color: #0f0; font-style: italic;">
+                                💡 Cliquez sur 🪞 pour déchiffrer
+                            </div>
+                        </div>
+
+                        <div class="final-message">
+                            <p class="neon-text">"Il n'y a pas de cuillere... Il n'y a que des workarounds."</p>
+                            <button class="matrix-button" id="hire-button">
+                                <span>🚀 RECRUTER CE TYPE BIZARRE</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- GOAT Easter Egg (hidden) -->
+    <div class="goat-easter-egg hidden" id="goat-easter-egg">
+        <div class="goat-content">
+            <h2>🐐 GOAT... vraiment? 🐐</h2>
+            <p>Vous avez decouvert l'easter egg ironique!</p>
+            <p>Dans certains domaines TRES specifiques, Antoine est... le seul:</p>
+            <ul>
+                <li>✓ Lecture de traces LMWCS (personne d'autre ne veut)</li>
+                <li>✓ Debug a 22h un vendredi (passion discutable)</li>
+                <li>✓ Automatisation de trucs obscurs</li>
+                <li>✓ Creation de CVs interactifs au lieu de chercher un vrai job</li>
+            </ul>
+            <p style="font-style: italic; margin-top: 15px;">"GOAT par defaut, faute de concurrence."</p>
+            <button class="matrix-button" onclick="document.getElementById('goat-easter-egg').classList.add('hidden')">
+                OK j'ai compris l'ironie
+            </button>
+        </div>
+    </div>
+
+    <script src="matrix.js"></script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --green: #00ff00;
+    --dark-green: #00aa00;
+    --black: #000000;
+    --dark-gray: #0a0a0a;
+    --matrix-green: #00ff41;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    color: var(--green);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* CRT Effect */
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    animation: flicker 0.15s infinite;
+    z-index: 1000;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.97; }
+    50% { opacity: 0.99; }
+    100% { opacity: 0.97; }
+}
+
+.terminal-container {
+    width: 90%;
+    max-width: 1000px;
+    height: 80vh;
+    background: rgba(0, 0, 0, 0.95);
+    border-radius: 10px;
+    box-shadow:
+        0 0 50px rgba(0, 255, 0, 0.3),
+        0 0 100px rgba(0, 255, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--dark-green);
+}
+
+.terminal-header {
+    background: #1a1a1a;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--dark-green);
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+    margin-right: 15px;
+}
+
+.btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close { background: #ff5f56; }
+.minimize { background: #ffbd2e; }
+.maximize { background: #27c93f; }
+
+.terminal-title {
+    color: var(--green);
+    font-size: 14px;
+    flex: 1;
+    text-align: center;
+}
+
+.terminal-body {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    color: var(--green);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.boot-sequence {
+    color: var(--dark-green);
+    margin-bottom: 20px;
+}
+
+.ascii-art {
+    color: var(--matrix-green);
+    font-size: 10px;
+    line-height: 1.2;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    margin: 20px 0;
+}
+
+.welcome-message {
+    margin-bottom: 30px;
+}
+
+.typing {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.5; }
+}
+
+.command-highlight {
+    color: var(--matrix-green);
+    font-weight: bold;
+    background: rgba(0, 255, 65, 0.1);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.prompt {
+    color: var(--matrix-green);
+    white-space: nowrap;
+}
+
+#command-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--green);
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    outline: none;
+    caret-color: var(--green);
+}
+
+#output .command {
+    color: var(--matrix-green);
+    margin-top: 15px;
+}
+
+#output .result {
+    color: var(--green);
+    margin: 5px 0 15px 0;
+    padding-left: 10px;
+}
+
+#output .error {
+    color: #ff0000;
+}
+
+#output .success {
+    color: #00ff00;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+#output pre {
+    color: var(--green);
+    margin: 10px 0;
+}
+
+/* White Rabbit Easter Egg */
+.white-rabbit {
+    position: fixed;
+    font-size: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 999;
+    animation: hop 2s ease-in-out infinite;
+}
+
+.white-rabbit:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+}
+
+@keyframes hop {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2000;
+}
+
+.matrix-char {
+    position: absolute;
+    color: var(--matrix-green);
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+/* Scrollbar */
+.terminal-body::-webkit-scrollbar {
+    width: 10px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+    background: var(--dark-green);
+    border-radius: 5px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--green);
+}
+
+/* Glitch effect for special messages */
+.glitch {
+    animation: glitch 0.5s infinite;
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}

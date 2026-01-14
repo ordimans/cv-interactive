@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antoine JACROT - Blackjack CV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .blackjack-table {
+            background: linear-gradient(145deg, #0f4c3a, #165a42);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            max-width: 900px;
+            width: 100%;
+            border: 8px solid #8b6914;
+            position: relative;
+        }
+
+        h1 {
+            color: #ffd700;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7), 0 0 10px #ffd700; }
+            50% { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7), 0 0 20px #ffd700, 0 0 30px #ffd700; }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .instructions {
+            text-align: center;
+            color: #a0d8a0;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        .dealer-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .dealer-title {
+            color: #ffd700;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            min-height: 140px;
+            align-items: center;
+        }
+
+        .card {
+            width: 80px;
+            height: 112px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 2px solid #333;
+        }
+
+        .card.red {
+            color: #d32f2f;
+        }
+
+        .card.black {
+            color: #000;
+        }
+
+        .card.hidden {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #1a237e 100%);
+            color: #ffd700;
+            font-size: 3rem;
+        }
+
+        .card-value {
+            font-size: 1.1rem;
+            position: absolute;
+            top: 5px;
+            left: 8px;
+        }
+
+        .card-suit {
+            font-size: 2.5rem;
+        }
+
+        .score {
+            text-align: center;
+            color: #ffd700;
+            font-size: 1.3rem;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .player-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+        }
+
+        .player-title {
+            color: #ffd700;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-hit {
+            background: linear-gradient(135deg, #e53935 0%, #c62828 100%);
+            color: white;
+        }
+
+        .btn-stand {
+            background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+            color: white;
+        }
+
+        .btn-deal {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #000;
+            font-size: 1.5rem;
+            padding: 18px 50px;
+        }
+
+        .message {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .message.win {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4caf50;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        .message.lose {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: #f44336;
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .message.blackjack {
+            background: linear-gradient(135deg, #ffd700 0%, #ff0080 100%);
+            border-color: #ffd700;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.6rem;
+            animation: pulse 1s ease-in-out 3;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #a0d8a0;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: #ffd700;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .cv-info-panel {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            margin-top: 20px;
+        }
+
+        .cv-info-panel h3 {
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .cv-info-item {
+            background: rgba(76, 175, 80, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4caf50;
+            color: #fff;
+            line-height: 1.6;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cv-complete {
+            background: linear-gradient(135deg, #ffd700 0%, #ff0080 100%);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            animation: rainbow 3s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .cv-complete h2 {
+            color: #fff;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .contact-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 40px;
+            background: #fff;
+            color: #1e3c72;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .reset-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 35px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="blackjack-table">
+        <h1>🃏 BLACKJACK CV 🃏</h1>
+        <div class="subtitle">Battez Antoine pour débloquer son CV!</div>
+        <div class="instructions">Gagnez des mains pour découvrir les infos - 21 = BLACKJACK!</div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-label">Victoires</div>
+                <div class="stat-value" id="wins">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Défaites</div>
+                <div class="stat-value" id="losses">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Mains Jouées</div>
+                <div class="stat-value" id="hands">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">CV Débloqué</div>
+                <div class="stat-value" id="unlocked">0/8</div>
+            </div>
+        </div>
+
+        <div class="message" id="message">
+            🎰 Cliquez sur DEAL pour commencer la partie!
+        </div>
+
+        <div class="dealer-section">
+            <div class="dealer-title">🤵 ANTOINE - Le Dealer Expert</div>
+            <div class="cards-container" id="dealer-cards"></div>
+            <div class="score" id="dealer-score"></div>
+        </div>
+
+        <div class="player-section">
+            <div class="player-title">🎲 VOUS - Le Recruteur</div>
+            <div class="cards-container" id="player-cards"></div>
+            <div class="score" id="player-score"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-deal" id="deal-btn" onclick="dealCards()">DEAL</button>
+            <button class="btn btn-hit" id="hit-btn" onclick="hit()" disabled>HIT</button>
+            <button class="btn btn-stand" id="stand-btn" onclick="stand()" disabled>STAND</button>
+        </div>
+
+        <div class="cv-info-panel" id="cv-panel" style="display: none;">
+            <h3>📋 INFORMATIONS DÉBLOQUÉES</h3>
+            <div id="cv-content"></div>
+        </div>
+
+        <button class="reset-btn" onclick="resetGame()">🔄 Recommencer</button>
+    </div>
+
+    <script>
+        // Anti-bot: contact data stored reversed
+        const secretContact = {
+            email: 'moc.liamg@torcaj.eniotna',
+            tel: '8️⃣0️⃣3️⃣5️⃣4️⃣5️⃣3️⃣4️⃣6️⃣0️⃣'
+        };
+
+        function createMirrorContact() {
+            return `
+                <div style="margin: 20px 0; padding: 15px; background: rgba(255, 215, 0, 0.1); border-radius: 10px; border: 2px solid rgba(255, 215, 0, 0.3); text-align: center;">
+                    <p style="color: #fff; margin-bottom: 10px;">📧 Email: <span class="mirror" id="email-mirror-bj" style="filter: blur(3px); cursor: pointer; color: #ffd700;" onclick="revealEmailMirror()">moc.liamg@torcaj.eniotna</span> 🪞</p>
+                    <p style="color: #fff; margin-bottom: 10px;">📱 Tel: <span class="mirror" id="tel-mirror-bj" style="filter: blur(3px); cursor: pointer; color: #ffd700;" onclick="revealTelMirror()">8️⃣0️⃣3️⃣5️⃣4️⃣5️⃣3️⃣4️⃣6️⃣0️⃣</span> 🪞</p>
+                    <p style="font-size: 0.9rem; color: #fff;">💡 Cliquez sur 🪞 pour déchiffrer</p>
+                </div>
+            `;
+        }
+
+        window.revealEmailMirror = function() {
+            const el = document.getElementById('email-mirror-bj');
+            if (el) {
+                const revealed = secretContact.email.split('').reverse().join('');
+                el.style.filter = 'none';
+                el.innerHTML = `${revealed} <button onclick="copyToClipboard('${revealed}', 'email')" style="cursor: pointer; padding: 5px 10px; background: #ffd700; color: #000; border: none; border-radius: 5px; margin-left: 10px;">📋 Copier</button>`;
+                el.onclick = null;
+            }
+        };
+
+        window.revealTelMirror = function() {
+            const el = document.getElementById('tel-mirror-bj');
+            if (el) {
+                const revealed = secretContact.tel.split('').reverse().join('');
+                const plain = '0643545308';
+                el.style.filter = 'none';
+                el.innerHTML = `${revealed} <button onclick="copyToClipboard('${plain}', 'tel')" style="cursor: pointer; padding: 5px 10px; background: #ffd700; color: #000; border: none; border-radius: 5px; margin-left: 10px;">📋 Copier</button>`;
+                el.onclick = null;
+            }
+        };
+
+        window.copyToClipboard = function(text, type) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`✓ ${type === 'email' ? 'Email' : 'Téléphone'} copié!`);
+            });
+        };
+
+        // CV Data - same as slot machine
+        const cvData = {
+            '👓': {
+                name: 'LMWCS Master',
+                info: '<strong>👓 THE ONE QUI LIT LES TRACES LMWCS</strong><br>Compétence unique et rare. Les traces LMWCS sont réputées illisibles (format propriétaire, 10 000 lignes/minute). Antoine les déchiffre en 30 secondes en moyenne. Taux de résolution: 100%. Formation de 12 personnes sur cette compétence.'
+            },
+            '📦': {
+                name: 'Expert Logistique',
+                info: '<strong>📦 14 ANS D\'EXPERTISE LOGISTIQUE</strong><br>Parcours complet dans les systèmes logistiques automatisés:<br>• 2025-Présent: Expert Technique @ Savoye<br>• 2012-2025: Ingénieur Support @ Savoye (13 ans!)<br>• 2011-2012: Analyste/Programmeur C @ Dematic<br>Fidélité rare, expertise complète.'
+            },
+            '🤖': {
+                name: 'Maker de Bots',
+                info: '<strong>🤖 DÉVELOPPEUR DE BOTS INDUSTRIALISÉS</strong><br>Passion pour l\'automatisation:<br>• Bots de tracking automatisés<br>• Scripts d\'automatisation quotidiens<br>• Outils pour la communauté<br>• Dashboard de santé système<br>Créateur pragmatique: "Si on le fait 10 fois, automatisons-le."'
+            },
+            '💻': {
+                name: 'Polyglotte Tech',
+                info: '<strong>💻 POLYVALENCE TECHNIQUE</strong><br>Maîtrise multiple langages et technologies:<br>• Java, Python, Go, C, PL/SQL<br>• Bash scripting<br>• Systèmes: WMS, WCS, TMS, OMS<br>• Infrastructure: Docker, CI/CD, Monitoring<br>Capacité d\'adaptation et apprentissage continu.'
+            },
+            '⚡': {
+                name: 'Monitoring Proactif',
+                info: '<strong>⚡ MONITORING PROACTIF - INNOVATION MAJEURE</strong><br>Projet personnel devenu officiel (2018):<br>• Développé seul sur 3 mois (soirs & week-ends)<br>• Détection préventive des pannes<br>• ROI: -67% d\'incidents critiques<br>• Économie: -120K€/an<br>• Satisfaction client: +21 points<br>Initiative sans feu vert management!'
+            },
+            '🎯': {
+                name: 'Vision Transverse',
+                info: '<strong>🎯 VISION TRANSVERSE EXCEPTIONNELLE</strong><br>Comprend l\'écosystème complet et les interdépendances:<br>• WMS ↔ WCS ↔ TMS ↔ OMS<br>• Résout des bugs que les équipes silotées ne trouvent pas<br>• Explique les concepts techniques aux non-techniques<br>• Pense impacts en cascade<br>"Il voit le système comme un tout."'
+            },
+            '🏆': {
+                name: 'Expert Technique',
+                info: '<strong>🏆 EXPERT TECHNIQUE DEPUIS MAI 2025</strong><br>Promotion bien méritée après 13 ans:<br>• Référent technique écosystème complet<br>• Pilote projets complexes<br>• Architecture technique & décisions<br>• Formation nouvelles recrues<br>• Reconnaissance par les pairs<br>Évolution naturelle vers l\'expertise.'
+            },
+            '🔧': {
+                name: 'Pragmatisme',
+                info: '<strong>🔧 PRAGMATISME CRÉATIF</strong><br>Équilibre parfait théorie/pratique:<br>• Solutions simples à problèmes complexes<br>• "La meilleure solution est celle qui marche"<br>• Esprit d\'équipe et partage<br>• Formation juniors<br>• Animation d\'équipe<br>• Base de connaissances interactive<br>Soft skills au service de la technique.'
+            }
+        };
+
+        const cvKeys = Object.keys(cvData);
+
+        // Card deck
+        const suits = ['♠', '♥', '♦', '♣'];
+        const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+        // Game state
+        let gameState = {
+            deck: [],
+            playerHand: [],
+            dealerHand: [],
+            wins: 0,
+            losses: 0,
+            hands: 0,
+            unlockedInfo: new Set(),
+            isPlaying: false,
+            dealerHidden: true
+        };
+
+        // Create and shuffle deck
+        function createDeck() {
+            const deck = [];
+            for (let suit of suits) {
+                for (let value of values) {
+                    deck.push({
+                        suit: suit,
+                        value: value,
+                        numValue: getCardValue(value)
+                    });
+                }
+            }
+            return shuffleDeck(deck);
+        }
+
+        function shuffleDeck(deck) {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            return deck;
+        }
+
+        function getCardValue(value) {
+            if (value === 'A') return 11;
+            if (['J', 'Q', 'K'].includes(value)) return 10;
+            return parseInt(value);
+        }
+
+        // Calculate hand value
+        function calculateHandValue(hand) {
+            let value = 0;
+            let aces = 0;
+
+            for (let card of hand) {
+                value += card.numValue;
+                if (card.value === 'A') aces++;
+            }
+
+            // Adjust for aces
+            while (value > 21 && aces > 0) {
+                value -= 10;
+                aces--;
+            }
+
+            return value;
+        }
+
+        // Render cards
+        function renderCard(card, hidden = false) {
+            const isRed = ['♥', '♦'].includes(card.suit);
+            if (hidden) {
+                return `<div class="card hidden">🂠</div>`;
+            }
+            return `
+                <div class="card ${isRed ? 'red' : 'black'}">
+                    <div class="card-value">${card.value}</div>
+                    <div class="card-suit">${card.suit}</div>
+                </div>
+            `;
+        }
+
+        function updateDisplay() {
+            const playerCardsEl = document.getElementById('player-cards');
+            const dealerCardsEl = document.getElementById('dealer-cards');
+            const playerScoreEl = document.getElementById('player-score');
+            const dealerScoreEl = document.getElementById('dealer-score');
+
+            // Player cards
+            playerCardsEl.innerHTML = gameState.playerHand.map(card => renderCard(card)).join('');
+            const playerValue = calculateHandValue(gameState.playerHand);
+            playerScoreEl.textContent = `Score: ${playerValue}`;
+
+            // Dealer cards
+            if (gameState.dealerHidden && gameState.dealerHand.length > 0) {
+                dealerCardsEl.innerHTML = renderCard(gameState.dealerHand[0]) + renderCard(gameState.dealerHand[0], true);
+                const visibleValue = gameState.dealerHand[0].numValue;
+                dealerScoreEl.textContent = `Score: ${visibleValue} + ?`;
+            } else {
+                dealerCardsEl.innerHTML = gameState.dealerHand.map(card => renderCard(card)).join('');
+                const dealerValue = calculateHandValue(gameState.dealerHand);
+                dealerScoreEl.textContent = `Score: ${dealerValue}`;
+            }
+
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('wins').textContent = gameState.wins;
+            document.getElementById('losses').textContent = gameState.losses;
+            document.getElementById('hands').textContent = gameState.hands;
+            document.getElementById('unlocked').textContent = `${gameState.unlockedInfo.size}/${cvKeys.length}`;
+        }
+
+        function dealCards() {
+            gameState.deck = createDeck();
+            gameState.playerHand = [gameState.deck.pop(), gameState.deck.pop()];
+            gameState.dealerHand = [gameState.deck.pop(), gameState.deck.pop()];
+            gameState.isPlaying = true;
+            gameState.dealerHidden = true;
+            gameState.hands++;
+
+            document.getElementById('deal-btn').disabled = true;
+            document.getElementById('hit-btn').disabled = false;
+            document.getElementById('stand-btn').disabled = false;
+
+            updateDisplay();
+
+            const playerValue = calculateHandValue(gameState.playerHand);
+            const dealerValue = calculateHandValue(gameState.dealerHand);
+
+            // Check for blackjacks
+            if (playerValue === 21 && dealerValue === 21) {
+                endHand('push', '🤝 PUSH! Vous avez tous les deux Blackjack!');
+            } else if (playerValue === 21) {
+                endHand('blackjack', '🎊 BLACKJACK! Victoire instantanée! 🎊');
+            } else if (dealerValue === 21) {
+                endHand('lose', '😞 Antoine a Blackjack... Vous perdez.');
+            } else {
+                document.getElementById('message').textContent = '🎲 HIT pour tirer, STAND pour rester';
+                document.getElementById('message').className = 'message';
+            }
+        }
+
+        function hit() {
+            if (!gameState.isPlaying) return;
+
+            gameState.playerHand.push(gameState.deck.pop());
+            updateDisplay();
+
+            const playerValue = calculateHandValue(gameState.playerHand);
+
+            if (playerValue > 21) {
+                endHand('lose', '💥 BUST! Vous avez dépassé 21... Antoine gagne.');
+            } else if (playerValue === 21) {
+                stand(); // Auto-stand on 21
+            }
+        }
+
+        function stand() {
+            if (!gameState.isPlaying) return;
+
+            gameState.dealerHidden = false;
+            document.getElementById('hit-btn').disabled = true;
+            document.getElementById('stand-btn').disabled = true;
+
+            // Dealer plays
+            const playerValue = calculateHandValue(gameState.playerHand);
+            let dealerValue = calculateHandValue(gameState.dealerHand);
+
+            updateDisplay();
+
+            // Dealer hits on 16 or less
+            const dealerPlay = () => {
+                dealerValue = calculateHandValue(gameState.dealerHand);
+
+                if (dealerValue < 17) {
+                    setTimeout(() => {
+                        gameState.dealerHand.push(gameState.deck.pop());
+                        updateDisplay();
+                        dealerPlay();
+                    }, 800);
+                } else {
+                    // Determine winner
+                    setTimeout(() => {
+                        if (dealerValue > 21) {
+                            endHand('win', `🎉 Antoine BUST à ${dealerValue}! Vous gagnez!`);
+                        } else if (playerValue > dealerValue) {
+                            endHand('win', `🎉 ${playerValue} bat ${dealerValue}! Vous gagnez!`);
+                        } else if (dealerValue > playerValue) {
+                            endHand('lose', `😞 ${dealerValue} bat ${playerValue}... Antoine gagne.`);
+                        } else {
+                            endHand('push', `🤝 PUSH! Égalité à ${playerValue}.`);
+                        }
+                    }, 500);
+                }
+            };
+
+            dealerPlay();
+        }
+
+        function endHand(result, message) {
+            gameState.isPlaying = false;
+            document.getElementById('hit-btn').disabled = true;
+            document.getElementById('stand-btn').disabled = true;
+            document.getElementById('deal-btn').disabled = false;
+
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = message;
+
+            if (result === 'win' || result === 'blackjack') {
+                messageEl.className = result === 'blackjack' ? 'message blackjack' : 'message win';
+                gameState.wins++;
+                unlockRandomCV();
+            } else if (result === 'lose') {
+                messageEl.className = 'message lose';
+                gameState.losses++;
+            } else {
+                messageEl.className = 'message';
+            }
+
+            updateStats();
+        }
+
+        function unlockRandomCV() {
+            // Find locked CV items
+            const locked = cvKeys.filter(key => !gameState.unlockedInfo.has(key));
+
+            if (locked.length > 0) {
+                const randomKey = locked[Math.floor(Math.random() * locked.length)];
+                gameState.unlockedInfo.add(randomKey);
+
+                const cvPanel = document.getElementById('cv-panel');
+                const cvContent = document.getElementById('cv-content');
+
+                cvPanel.style.display = 'block';
+
+                const newInfo = document.createElement('div');
+                newInfo.className = 'cv-info-item';
+                newInfo.innerHTML = `${randomKey} ${cvData[randomKey].info}`;
+                cvContent.appendChild(newInfo);
+
+                // Check if all unlocked
+                if (gameState.unlockedInfo.size === cvKeys.length) {
+                    setTimeout(showComplete, 1000);
+                }
+            }
+        }
+
+        function showComplete() {
+            const cvPanel = document.getElementById('cv-panel');
+            cvPanel.innerHTML = `
+                <div class="cv-complete">
+                    <h2>🏆 CV COMPLET DÉBLOQUÉ! 🏆</h2>
+                    <p style="font-size: 1.2rem; color: #fff; margin-bottom: 15px;">
+                        Bravo! Vous avez battu Antoine au Blackjack et découvert toutes ses compétences!
+                    </p>
+                    <p style="color: #fff; margin-bottom: 10px;">
+                        <strong>${gameState.wins}</strong> victoires / <strong>${gameState.losses}</strong> défaites en <strong>${gameState.hands}</strong> mains
+                    </p>
+                    <p style="color: #fff; margin-bottom: 10px;">
+                        Taux de réussite: <strong>${((gameState.wins / gameState.hands) * 100).toFixed(1)}%</strong>
+                    </p>
+                    <p style="color: #fff; font-size: 1.1rem; margin-top: 20px;">
+                        Prêt à recruter The One?
+                    </p>
+                    ${createMirrorContact()}
+                </div>
+            `;
+        }
+
+        function resetGame() {
+            gameState = {
+                deck: [],
+                playerHand: [],
+                dealerHand: [],
+                wins: 0,
+                losses: 0,
+                hands: 0,
+                unlockedInfo: new Set(),
+                isPlaying: false,
+                dealerHidden: true
+            };
+
+            document.getElementById('player-cards').innerHTML = '';
+            document.getElementById('dealer-cards').innerHTML = '';
+            document.getElementById('player-score').textContent = '';
+            document.getElementById('dealer-score').textContent = '';
+            document.getElementById('message').textContent = '🎰 Cliquez sur DEAL pour commencer la partie!';
+            document.getElementById('message').className = 'message';
+            document.getElementById('cv-panel').style.display = 'none';
+            document.getElementById('cv-content').innerHTML = '';
+            document.getElementById('deal-btn').disabled = false;
+            document.getElementById('hit-btn').disabled = true;
+            document.getElementById('stand-btn').disabled = true;
+
+            updateStats();
+        }
+
+        // Initialize
+        updateStats();
+    </script>
+</body>
+</html>

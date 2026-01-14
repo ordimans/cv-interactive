@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antoine JACROT - CV Interactifs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #00ff41;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px #00ff41;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px #00ff41; }
+            50% { text-shadow: 0 0 40px #00ff41, 0 0 60px #00ff41; }
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #008f11;
+            margin-bottom: 50px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 30px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid #008f11;
+            border-radius: 10px;
+            line-height: 1.8;
+        }
+
+        .versions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .version-card {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .version-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0, 255, 65, 0.3);
+            border-color: #00ff41;
+        }
+
+        .version-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .version-card h2 {
+            margin-bottom: 15px;
+            color: #00ff41;
+        }
+
+        .version-card p {
+            color: #008f11;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .version-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .version-btn:hover {
+            background: #00ff41;
+            color: #000;
+        }
+
+        .recommended {
+            position: relative;
+            border-color: #ffd700;
+        }
+
+        .recommended::before {
+            content: "⭐ RECOMMANDÉ ⭐";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffd700;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .contact-section {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid #008f11;
+            border-radius: 10px;
+        }
+
+        .contact-section h2 {
+            margin-bottom: 20px;
+            color: #00ff41;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-item a {
+            color: #00ff41;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .versions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ANTOINE JACROT</h1>
+        <div class="subtitle">EXPERT TECHNIQUE - 14 ans d'expérience</div>
+
+        <div class="intro">
+            <p>
+                Bienvenue sur mon CV interactif!<br><br>
+                J'ai créé <strong>4 versions originales</strong> pour montrer mes compétences de manière ludique.<br>
+                Choisissez celle qui vous plaît le plus...
+            </p>
+        </div>
+
+        <div class="versions-grid">
+            <div class="version-card recommended" onclick="location.href='version1-terminal/index.html'">
+                <div class="version-icon">🖥️</div>
+                <h2>VERSION 1: TERMINAL</h2>
+                <p>
+                    Terminal Unix interactif avec easter eggs Matrix.<br><br>
+                    ✓ Commandes interactives<br>
+                    ✓ Lapin blanc 🐰<br>
+                    ✓ Konami Code<br>
+                    ✓ Easter eggs cachés
+                </p>
+                <a href="version1-terminal/index.html" class="version-btn">LANCER</a>
+            </div>
+
+            <div class="version-card" onclick="location.href='version2-adventure/index.html'">
+                <div class="version-icon">🎮</div>
+                <h2>VERSION 2: ADVENTURE</h2>
+                <p>
+                    Mini-jeu d'aventure RPG style rétro.<br><br>
+                    ✓ Exploration interactive<br>
+                    ✓ Quêtes et PNJs<br>
+                    ✓ Style pixel-art<br>
+                    ✓ Prototype démonstratif
+                </p>
+                <a href="version2-adventure/index.html" class="version-btn">JOUER</a>
+            </div>
+
+            <div class="version-card" onclick="location.href='version3-slots/index.html'">
+                <div class="version-icon">🎰</div>
+                <h2>VERSION 3: SLOT MACHINE</h2>
+                <p>
+                    Machine à sous interactive façon casino.<br><br>
+                    ✓ Spins pour découvrir le CV<br>
+                    ✓ Combos et animations<br>
+                    ✓ System de points<br>
+                    ✓ Prototype démonstratif
+                </p>
+                <a href="version3-slots/index.html" class="version-btn">SPIN!</a>
+            </div>
+
+            <div class="version-card recommended" onclick="location.href='version4-matrix/index.html'">
+                <div class="version-icon">🌟</div>
+                <h2>VERSION 4: MATRIX</h2>
+                <p>
+                    THE ONE - Matrix Edition complète!<br><br>
+                    ✓ Interface Matrix immersive<br>
+                    ✓ Lapin blanc & Neo 👓<br>
+                    ✓ Colis logistiques 📦<br>
+                    ✓ Easter egg GOAT 🐐
+                </p>
+                <a href="version4-matrix/index.html" class="version-btn">ENTRER</a>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h2>📧 CONTACT</h2>
+            <p>Prêt à recruter The One?</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📍</span>
+                    <span>Marcigny (71)</span>
+                </div>
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span id="email-mirror-idx" style="filter: blur(3px); cursor: pointer;" onclick="revealEmail()">moc.liamg@torcaj.eniotna</span>
+                    <span style="cursor: pointer;" onclick="revealEmail()"> 🪞</span>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <span id="tel-mirror-idx" style="filter: blur(3px); cursor: pointer;" onclick="revealTel()">8️⃣0️⃣ 3️⃣5️⃣ 4️⃣5️⃣ 3️⃣4️⃣ 6️⃣0️⃣</span>
+                    <span style="cursor: pointer;" onclick="revealTel()"> 🪞</span>
+                </div>
+                <div class="contact-item" style="font-size: 0.8rem; opacity: 0.7;">
+                    💡 Cliquez 🪞 pour révéler
+                </div>
+    <script>
+        function revealEmail() {
+            const el = document.getElementById('email-mirror-idx');
+            const revealed = 'moc.liamg@torcaj.eniotna'.split('').reverse().join('');
+            el.style.filter = 'none';
+            el.innerHTML = revealed + ' <button onclick="copyEmail()">📋</button>';
+            el.onclick = null;
+        }
+        function revealTel() {
+            const el = document.getElementById('tel-mirror-idx');
+            el.style.filter = 'none';
+            el.innerHTML = '0️⃣6️⃣ 4️⃣3️⃣ 5️⃣4️⃣ 5️⃣3️⃣ 0️⃣8️⃣ <button onclick="copyTel()">📋</button>';
+            el.onclick = null;
+        }
+        function copyEmail() {
+            navigator.clipboard.writeText('moc.liamg@torcaj.eniotna'.split('').reverse().join(''));
+            alert('Email copié!');
+        }
+        function copyTel() {
+            navigator.clipboard.writeText('0643545308');
+            alert('Tel copié!');
+        }
+    </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

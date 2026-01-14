@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Recrutement dont vous êtes le Décideur</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f5e6d3;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .book-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #2d2416;
+            border: 8px solid #5c4033;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .book-header {
+            background: linear-gradient(to bottom, #5c4033, #3d2a1f);
+            padding: 30px;
+            border-bottom: 3px solid #8b6f47;
+            text-align: center;
+            border-radius: 7px 7px 0 0;
+        }
+
+        h1 {
+            font-family: 'MedievalSharp', serif;
+            color: #ffd700;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px #000;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #c9a96e;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid #5c4033;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 5px 15px;
+            background: rgba(92, 64, 51, 0.5);
+            border-radius: 5px;
+            border: 1px solid #8b6f47;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #c9a96e;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .game-content {
+            padding: 40px;
+            min-height: 400px;
+        }
+
+        .chapter-number {
+            color: #8b6f47;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .story-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: justify;
+            color: #f5e6d3;
+        }
+
+        .story-text p {
+            margin-bottom: 15px;
+        }
+
+        .emphasis {
+            color: #ffd700;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .choices {
+            margin-top: 30px;
+        }
+
+        .choice-title {
+            color: #c9a96e;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .choice-btn {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #3d2a1f, #5c4033);
+            border: 2px solid #8b6f47;
+            color: #f5e6d3;
+            font-family: Georgia, serif;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-align: left;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .choice-btn::before {
+            content: '▶';
+            position: absolute;
+            left: 20px;
+            color: #ffd700;
+            transition: all 0.3s;
+        }
+
+        .choice-btn:hover {
+            background: linear-gradient(to right, #5c4033, #8b6f47);
+            border-color: #ffd700;
+            transform: translateX(5px);
+        }
+
+        .choice-btn:hover::before {
+            left: 25px;
+        }
+
+        .ending {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .ending h2 {
+            color: #ffd700;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .restart-btn {
+            margin-top: 20px;
+            padding: 15px 40px;
+            background: #ffd700;
+            border: none;
+            color: #1a1a2e;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .restart-btn:hover {
+            background: #ffed4e;
+            transform: scale(1.05);
+        }
+
+        .secret-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 215, 0, 0.2);
+            padding: 10px 15px;
+            border-radius: 50%;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            .game-content {
+                padding: 20px;
+            }
+            .story-text {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book-header">
+            <h1>📖 Le Recrutement dont vous êtes le Décideur 📖</h1>
+            <div class="subtitle">Une aventure interactive pour recruter l'Expert Technique</div>
+        </div>
+
+        <div class="stats-bar" id="stats-bar">
+            <div class="stat">
+                <div class="stat-label">Informations</div>
+                <div class="stat-value" id="info-score">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Confiance</div>
+                <div class="stat-value" id="trust-score">50</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Secrets</div>
+                <div class="stat-value" id="secrets-found">0/3</div>
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="chapter-number" id="chapter-number">Chapitre 1</div>
+            <div class="story-text" id="story-text"></div>
+            <div class="choices" id="choices"></div>
+        </div>
+    </div>
+
+    <div class="secret-indicator" id="secret-indicator" style="display: none;">🐰</div>
+
+    <script>
+        // Anti-bot: contact data stored reversed
+        const secretContact = {
+            email: 'moc.liamg@torcaj.eniotna',
+            tel: '8️⃣0️⃣3️⃣5️⃣4️⃣5️⃣3️⃣4️⃣6️⃣0️⃣'
+        };
+
+        function createMirrorContact() {
+            return `
+                <div style="margin: 20px 0; padding: 15px; background: rgba(255, 215, 0, 0.1); border-radius: 10px; border: 2px solid rgba(255, 215, 0, 0.3);">
+                    <p>📧 Email: <span class="mirror" id="email-mirror-adv" style="filter: blur(3px); cursor: pointer; color: #ffd700;" onclick="revealEmailMirror()">moc.liamg@torcaj.eniotna</span> 🪞</p>
+                    <p>📱 Tel: <span class="mirror" id="tel-mirror-adv" style="filter: blur(3px); cursor: pointer; color: #ffd700;" onclick="revealTelMirror()">8️⃣0️⃣3️⃣5️⃣4️⃣5️⃣3️⃣4️⃣6️⃣0️⃣</span> 🪞</p>
+                    <p style="font-size: 0.9rem; color: #c9a96e; margin-top: 10px;">💡 Cliquez sur 🪞 pour déchiffrer</p>
+                </div>
+            `;
+        }
+
+        window.revealEmailMirror = function() {
+            const el = document.getElementById('email-mirror-adv');
+            if (el) {
+                const revealed = secretContact.email.split('').reverse().join('');
+                el.style.filter = 'none';
+                el.innerHTML = `${revealed} <button onclick="copyToClipboard('${revealed}', 'email')" style="cursor: pointer; padding: 5px 10px; background: #ffd700; color: #000; border: none; border-radius: 5px; margin-left: 10px;">📋 Copier</button>`;
+                el.onclick = null;
+            }
+        };
+
+        window.revealTelMirror = function() {
+            const el = document.getElementById('tel-mirror-adv');
+            if (el) {
+                const revealed = secretContact.tel.split('').reverse().join('');
+                const plain = '0643545308';
+                el.style.filter = 'none';
+                el.innerHTML = `${revealed} <button onclick="copyToClipboard('${plain}', 'tel')" style="cursor: pointer; padding: 5px 10px; background: #ffd700; color: #000; border: none; border-radius: 5px; margin-left: 10px;">📋 Copier</button>`;
+                el.onclick = null;
+            }
+        };
+
+        window.copyToClipboard = function(text, type) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`✓ ${type === 'email' ? 'Email' : 'Téléphone'} copié dans le presse-papiers!`);
+            });
+        };
+
+        // Game State
+        let gameState = {
+            info: 0,
+            trust: 50,
+            secrets: 0,
+            visitedNodes: [],
+            discoveredFacts: []
+        };
+
+        // Story Nodes
+        const story = {
+            start: {
+                chapter: "Chapitre 1: La Mission",
+                text: `
+                    <p>Vous êtes <span class="emphasis">Responsable RH</span> dans une grande entreprise de logistique automatisée. Votre mission: recruter un Expert Technique capable de résoudre les problèmes les plus complexes.</p>
+
+                    <p>Votre patron entre dans votre bureau:</p>
+
+                    <p>"Nous avons un besoin urgent. Les systèmes WMS, WCS, TMS... tout est interconnecté et personne ne maîtrise l'ensemble. Il nous faut quelqu'un avec une <span class="emphasis">vision transverse</span>. J'ai entendu parler d'une légende chez Savoye... On l'appelle <span class="emphasis">The One</span>."</p>
+
+                    <p>Il dépose un dossier sur votre bureau marqué <span class="emphasis">"CONFIDENTIEL - ANTOINE JACROT"</span>.</p>
+
+                    <p>Que faites-vous?</p>
+                `,
+                choices: [
+                    { text: "Ouvrir immédiatement le dossier confidentiel", next: "open_folder", info: 10 },
+                    { text: "Faire des recherches LinkedIn d'abord", next: "linkedin", info: 5 },
+                    { text: "Appeler un contact chez Savoye pour en savoir plus", next: "call_contact", trust: 10 },
+                    { text: 'Chercher "The One" sur Google', next: "google_search" }
+                ]
+            },
+
+            open_folder: {
+                chapter: "Chapitre 2: Le Dossier",
+                text: `
+                    <p>Vous ouvrez le dossier confidentiel. À l'intérieur, plusieurs documents:</p>
+
+                    <p><span class="emphasis">PROFIL:</span><br>
+                    Nom: JACROT Antoine<br>
+                    Poste actuel: Expert Technique @ Savoye (depuis mai 2025)<br>
+                    Expérience: 14 ans dans les systèmes logistiques<br>
+                    Localisation: Marcigny, France</p>
+
+                    <p>Une note manuscrite attire votre attention:</p>
+
+                    <p><span class="emphasis">"Compétence unique: Le seul capable de lire et débugger les traces LMWCS. Les autres développeurs abandonnent après 10 minutes. Lui trouve la solution en moyenne en 30 secondes. Taux de résolution: 100%."</span></p>
+
+                    <p>Un post-it jaune tombe du dossier: "Demander pour le monitoring proactif - c'est lui qui l'a mis en place"</p>
+                `,
+                choices: [
+                    { text: "Lire la section 'Parcours Professionnel'", next: "career_path", info: 15 },
+                    { text: "Aller directement à 'Compétences Techniques'", next: "technical_skills", info: 10 },
+                    { text: "Chercher des références et recommandations", next: "references", trust: 15 },
+                    { text: "Regarder le post-it sur le monitoring", next: "monitoring_secret", secret: true }
+                ]
+            },
+
+            linkedin: {
+                chapter: "Chapitre 2: LinkedIn",
+                text: `
+                    <p>Vous ouvrez LinkedIn et cherchez "Antoine JACROT Savoye".</p>
+
+                    <p>Son profil apparaît. Photo professionnelle, profil bien rempli. Vous remarquez:</p>
+
+                    <p>• <span class="emphasis">500+ relations</span><br>
+                    • Nombreuses recommandations de collègues<br>
+                    • Publications techniques sur les systèmes logistiques<br>
+                    • Participe à des groupes d'entraide sur l'automatisation</p>
+
+                    <p>Un commentaire récent attire votre attention: "Antoine nous a sauvés hier soir. Bug critique sur une trace LMWCS. 23h, tout le monde abandonnait. Il a trouvé en 5 minutes. Merci The One! 🙏"</p>
+
+                    <p>Son statut indique: <span class="emphasis">"Ouvert aux opportunités"</span></p>
+                `,
+                choices: [
+                    { text: "Lire ses recommandations en détail", next: "references", info: 10, trust: 10 },
+                    { text: "Regarder ses publications techniques", next: "technical_posts", info: 15 },
+                    { text: "Consulter le dossier confidentiel maintenant", next: "open_folder", info: 10 },
+                    { text: "Lui envoyer un message privé directement", next: "direct_message", trust: -10 }
+                ]
+            },
+
+            call_contact: {
+                chapter: "Chapitre 2: L'Appel",
+                text: `
+                    <p>Vous appelez Marie, une ancienne collègue qui travaille chez Savoye.</p>
+
+                    <p>"Antoine? Oh mon Dieu, tu veux le recruter? <span class="emphasis">Bonne chance!</span> C'est une perle rare. Laisse-moi te dire..."</p>
+
+                    <p>"Il a transformé notre support. Avant, on était réactifs. Maintenant, avec son système de monitoring proactif, on détecte les problèmes <span class="emphasis">avant</span> qu'ils n'arrivent. Les clients nous appellent moins car les bugs sont déjà résolus!"</p>
+
+                    <p>"Et les traces LMWCS... personne d'autre ne peut les lire. C'est comme du hiéroglyphe pour nous. Pour lui? C'est de la poésie."</p>
+
+                    <p>"Ah, et il a créé des petits bots automatisés pour la communauté interne. Genre des trucs qu'il fait le week-end pour rendre service. C'est ce genre de personne."</p>
+
+                    <p>Elle baisse la voix: "Entre nous, si vous le recrutez, Savoye va pleurer."</p>
+                `,
+                choices: [
+                    { text: "Demander plus de détails sur le monitoring proactif", next: "monitoring_details", info: 20 },
+                    { text: "Poser des questions sur sa personnalité", next: "personality", trust: 15 },
+                    { text: "Demander ses points faibles", next: "weaknesses", info: 10 },
+                    { text: "La remercier et consulter le dossier", next: "open_folder", trust: 5 }
+                ]
+            },
+
+            google_search: {
+                chapter: "Chapitre 2: Google",
+                text: `
+                    <p>Vous tapez "The One Antoine JACROT" dans Google.</p>
+
+                    <p>Les résultats sont... surprenants:</p>
+
+                    <p>• Un thread Reddit: "Comment devenir The One qui lit les traces LMWCS?"<br>
+                    Réponse la plus votée: "Tu ne deviens pas The One. Tu nais The One. Ou tu t'appelles Antoine."</p>
+
+                    <p>• Un article de blog interne Savoye (fuité): <span class="emphasis">"L'histoire du monitoring proactif"</span></p>
+
+                    <p>• Un GitHub avec des scripts d'automatisation (contributions publiques)</p>
+
+                    <p>• Une mention sur un forum: "Si vous avez un bug LMWCS à 3h du matin, priez pour qu'Antoine soit de garde."</p>
+                `,
+                choices: [
+                    { text: "Lire l'article sur le monitoring proactif", next: "monitoring_article", info: 15, secret: true },
+                    { text: "Consulter son GitHub", next: "github", info: 10 },
+                    { text: "Retourner au dossier confidentiel", next: "open_folder" },
+                    { text: "Contacter Savoye officiellement", next: "official_contact", trust: 10 }
+                ]
+            },
+
+            career_path: {
+                chapter: "Chapitre 3: Le Parcours",
+                text: `
+                    <p><span class="emphasis">PARCOURS PROFESSIONNEL:</span></p>
+
+                    <p><strong>2025 - Présent: Expert Technique @ Savoye</strong><br>
+                    "Promotion bien méritée. Référent technique sur l'écosystème complet (WMS, WCS, TMS, OMS). Pilote les projets complexes. Forme les nouvelles recrues. C'est lui qui décide des architectures techniques maintenant."</p>
+
+                    <p><strong>2012 - 2025: Ingénieur Support @ Savoye (13 ans!)</strong><br>
+                    "Commencé Support N1, rapidement monté N2 puis N3. A mis en place le monitoring proactif en 2018. Depuis, les incidents critiques ont chuté de 67%. Le taux de satisfaction client est passé de 73% à 94%."</p>
+
+                    <p><strong>2011 - 2012: Analyste/Programmeur C @ Dematic</strong><br>
+                    "Développement de systèmes de tri automatisés. C'est là qu'il a appris les bases de l'automatisation logistique."</p>
+
+                    <p>Une note en marge: <span class="emphasis">"13 ans chez Savoye = fidélité rare. Mais 'ouvert aux opportunités' depuis 2 mois. Fenêtre de tir?"</span></p>
+                `,
+                choices: [
+                    { text: "Analyser ses compétences techniques", next: "technical_skills", info: 15 },
+                    { text: "Chercher ses motivations pour changer", next: "motivations", info: 20 },
+                    { text: "Lire les recommandations", next: "references", trust: 10 },
+                    { text: "Préparer une offre immédiatement", next: "premature_offer", trust: -15 }
+                ]
+            },
+
+            technical_skills: {
+                chapter: "Chapitre 4: Les Compétences",
+                text: `
+                    <p><span class="emphasis">COMPÉTENCES TECHNIQUES:</span></p>
+
+                    <p><strong>Systèmes maîtrisés:</strong><br>
+                    • WMS (Warehouse Management System) ⭐⭐⭐⭐⭐<br>
+                    • WCS (Warehouse Control System) ⭐⭐⭐⭐⭐<br>
+                    • TMS (Transport Management System) ⭐⭐⭐⭐<br>
+                    • OMS (Order Management System) ⭐⭐⭐⭐</p>
+
+                    <p><strong>Compétence légendaire:</strong><br>
+                    <span class="emphasis">Lecture et débugage de traces LMWCS</span><br>
+                    "Les traces LMWCS sont réputées illisibles. Format propriétaire, logs cryptiques, 10 000 lignes par minute. Antoine les lit comme vous lisez ce texte. Il voit les patterns. Il prédit les bugs avant qu'ils ne cassent tout."</p>
+
+                    <p><strong>Développement:</strong><br>
+                    • Scripts d'automatisation (Python, Bash)<br>
+                    • Bots pour la communauté<br>
+                    • Outils de monitoring personnalisés</p>
+
+                    <p>Un tableau Excel montre ses statistiques:<br>
+                    Bugs résolus: 2847<br>
+                    Temps moyen de résolution: 32 minutes<br>
+                    Bugs LMWCS: 28 secondes (!)</p>
+                `,
+                choices: [
+                    { text: "Comprendre le monitoring proactif", next: "monitoring_details", info: 15 },
+                    { text: "Tester ses compétences (simulation)", next: "skills_test", info: 20 },
+                    { text: "Voir ses soft skills", next: "soft_skills", info: 10 },
+                    { text: "Passer à la phase de recrutement", next: "recruitment_phase" }
+                ]
+            },
+
+            references: {
+                chapter: "Chapitre 4: Les Témoignages",
+                text: `
+                    <p><span class="emphasis">RECOMMANDATIONS ET TÉMOIGNAGES:</span></p>
+
+                    <p><strong>Jean-Marc, Manager Support Savoye:</strong><br>
+                    "Antoine est la personne la plus fiable de mon équipe. Vision transverse exceptionnelle. Il comprend comment tout s'interconnecte. Quand il explique un problème, même les commerciaux comprennent."</p>
+
+                    <p><strong>Sarah, Cliente (Directrice Logistique):</strong><br>
+                    "Notre WMS plantait tous les lundis matin. Personne ne trouvait. Antoine a passé 2 heures sur site, a lu les traces LMWCS, et a trouvé: un job batch qui se lançait le dimanche soir et corrompait une table. Problème résolu définitivement. Depuis, je demande toujours Antoine."</p>
+
+                    <p><strong>Thomas, Développeur Junior:</strong><br>
+                    "Antoine m'a formé. Patient, pédagogue. Il ne juge jamais. Il m'a appris à <span class="emphasis">'voir le système dans son ensemble'</span>. Aujourd'hui je suis autonome grâce à lui."</p>
+
+                    <p><strong>Marie, Collègue Support:</strong><br>
+                    "Team player incroyable. Toujours là pour aider. A créé des bots pour nous faciliter la vie. Esprit pragmatique: 'Si on fait ça 10 fois par jour, automatisons-le.'"</p>
+                `,
+                choices: [
+                    { text: "Approfondir ses soft skills", next: "soft_skills", info: 15, trust: 15 },
+                    { text: "Comprendre sa vision transverse", next: "transverse_vision", info: 20 },
+                    { text: "Passer au recrutement", next: "recruitment_phase", info: 5 },
+                    { text: "Chercher des points faibles", next: "weaknesses" }
+                ]
+            },
+
+            monitoring_secret: {
+                chapter: "Chapitre 3: Le Secret du Monitoring",
+                text: `
+                    <p>Vous examinez le post-it jaune de plus près. Au verso, il y a des notes griffonnées:</p>
+
+                    <p><span class="emphasis">"Projet personnel 2018 - Monitoring Proactif</span><br>
+                    - Développé seul sur 3 mois<br>
+                    - Analyse automatique des patterns<br>
+                    - Prédiction des pannes<br>
+                    - Alertes préventives<br>
+                    - ROI: -67% d'incidents"</p>
+
+                    <p>"Le management ne voulait pas financer. Il l'a fait quand même le soir et le week-end. Quand ils ont vu les résultats, ils ont officialisé le projet."</p>
+
+                    <p><span class="emphasis">🐰 SECRET DÉCOUVERT: "L'Initiative" - Antoine prend des initiatives même sans feu vert.</span></p>
+
+                    <p>Votre jauge de confiance augmente. Ce type d'initiative est exactement ce que vous cherchez.</p>
+                `,
+                choices: [
+                    { text: "Continuer à lire le dossier", next: "career_path", info: 10 },
+                    { text: "Approfondir le monitoring proactif", next: "monitoring_details", info: 20 },
+                    { text: "Passer aux compétences techniques", next: "technical_skills" },
+                    { text: "Noter cette initiative pour l'entretien", next: "recruitment_phase", trust: 10 }
+                ]
+            },
+
+            monitoring_details: {
+                chapter: "Chapitre 5: Le Monitoring Proactif",
+                text: `
+                    <p>Vous trouvez un document détaillé sur le système de monitoring proactif.</p>
+
+                    <p><span class="emphasis">CONCEPT:</span><br>
+                    "Au lieu d'attendre que le système plante, on analyse les signes avant-coureurs. Comme un médecin qui fait de la prévention."</p>
+
+                    <p><strong>Comment ça marche:</strong></p>
+
+                    <p>1. <span class="emphasis">Collecte</span>: Scripts automatisés qui scannent les logs toutes les 5 minutes<br>
+                    2. <span class="emphasis">Analyse</span>: Détection de patterns anormaux (temps de réponse qui augmente, erreurs qui se répètent...)<br>
+                    3. <span class="emphasis">Alerte</span>: Notification AVANT que ça plante<br>
+                    4. <span class="emphasis">Action</span>: Intervention préventive</p>
+
+                    <p><strong>Résultats:</strong><br>
+                    • Incidents critiques: -67%<br>
+                    • Satisfaction client: +21 points<br>
+                    • Temps de résolution: -45%<br>
+                    • Coût support: -120K€/an</p>
+
+                    <p>Un graphique montre l'évolution. La courbe des incidents chute après 2018.</p>
+
+                    <p>Note en marge: "Proactivité = soft skill + compétence technique. Rare."</p>
+                `,
+                choices: [
+                    { text: "Imaginer ce qu'il pourrait faire chez nous", next: "potential_impact", info: 20 },
+                    { text: "Voir ses autres soft skills", next: "soft_skills", trust: 10 },
+                    { text: "Préparer l'entretien de recrutement", next: "recruitment_phase", info: 10 },
+                    { text: "Chercher d'autres innovations qu'il a faites", next: "innovations", secret: true }
+                ]
+            },
+
+            soft_skills: {
+                chapter: "Chapitre 5: Les Soft Skills",
+                text: `
+                    <p><span class="emphasis">ATOUTS MAJEURS:</span></p>
+
+                    <p><strong>1. Vision Transverse</strong> ⭐⭐⭐⭐⭐<br>
+                    "Ne se limite jamais à son périmètre. Comprend WMS + WCS + TMS + OMS et comment ils interagissent. Voit le système comme un tout. Pense aux impacts en cascade."</p>
+
+                    <p><strong>2. Proactivité</strong> ⭐⭐⭐⭐⭐<br>
+                    "N'attend pas qu'on lui dise quoi faire. Monitoring proactif = parfait exemple. Identifie les problèmes potentiels. Propose des solutions."</p>
+
+                    <p><strong>3. Pragmatisme Créatif</strong> ⭐⭐⭐⭐⭐<br>
+                    "Équilibre parfait entre théorie et pratique. Trouve des solutions simples à des problèmes complexes. 'La meilleure solution est celle qui marche.'"</p>
+
+                    <p><strong>4. Esprit d'Équipe</strong> ⭐⭐⭐⭐<br>
+                    "Partage ses connaissances. Forme les juniors. Crée des outils pour l'équipe. Bots automatisés pour faciliter le quotidien. Solidaire."</p>
+
+                    <p><strong>Communication:</strong><br>
+                    "Capable d'expliquer des concepts techniques à des non-techniques. Les commerciaux l'adorent pour ça."</p>
+                `,
+                choices: [
+                    { text: "Comprendre sa vision transverse en détail", next: "transverse_vision", info: 15 },
+                    { text: "Voir des exemples concrets", next: "concrete_examples", info: 10 },
+                    { text: "Chercher ses motivations", next: "motivations", info: 15 },
+                    { text: "Lancer le processus de recrutement", next: "recruitment_phase" }
+                ]
+            },
+
+            transverse_vision: {
+                chapter: "Chapitre 6: La Vision Transverse",
+                text: `
+                    <p>Vous trouvez un cas d'étude documenté:</p>
+
+                    <p><span class="emphasis">CAS RÉEL - Client automobile - 2023:</span></p>
+
+                    <p><strong>Problème:</strong> Le WMS indique que des pièces sont en stock, mais le robot du WCS ne les trouve pas.</p>
+
+                    <p><strong>Support classique:</strong><br>
+                    • Équipe WMS: "Notre système est bon, c'est le WCS"<br>
+                    • Équipe WCS: "Nos robots fonctionnent, c'est le WMS"<br>
+                    • Blocage. Client furieux.</p>
+
+                    <p><strong>Antoine arrive:</strong></p>
+
+                    <p>1. Lit les traces LMWCS (30 secondes)<br>
+                    2. Vérifie les logs WMS (2 minutes)<br>
+                    3. Analyse les commandes TMS en amont (5 minutes)</p>
+
+                    <p><span class="emphasis">Diagnostic:</span> "Le problème vient du TMS. Les pièces sont bien arrivées, mais le TMS a envoyé une mauvaise information de localisation au WMS. Le WMS a enregistré le bon stock au mauvais emplacement. Le WCS cherche au bon endroit... où il n'y a rien."</p>
+
+                    <p><strong>Solution:</strong> Correction de l'interface TMS/WMS + script de vérification automatique.</p>
+
+                    <p><strong>Résultat:</strong> Problème résolu en 37 minutes. Le client a demandé qu'Antoine soit son référent technique attitré.</p>
+
+                    <p>Note: "Vision transverse = comprendre TOUT le flux. Pas juste sa partie."</p>
+                `,
+                choices: [
+                    { text: "Voir d'autres exemples", next: "concrete_examples", info: 15 },
+                    { text: "Évaluer son potentiel chez nous", next: "potential_impact", info: 20 },
+                    { text: "Comprendre ses motivations", next: "motivations", info: 10 },
+                    { text: "Passer au recrutement", next: "recruitment_phase" }
+                ]
+            },
+
+            innovations: {
+                chapter: "Chapitre 6: Les Innovations",
+                text: `
+                    <p>En cherchant dans les archives, vous découvrez d'autres projets d'Antoine:</p>
+
+                    <p><span class="emphasis">PROJETS PERSONNELS (non officiels au départ):</span></p>
+
+                    <p><strong>1. Bot de tracking automatisé (2019)</strong><br>
+                    "Créé un bot qui suit automatiquement les colis problématiques. Envoie des updates dans un channel Slack. L'équipe a adoré. Maintenant c'est officiel."</p>
+
+                    <p><strong>2. Dashboard de santé système (2020)</strong><br>
+                    "Un écran qui montre en temps réel la santé de tous les systèmes. Vert = OK, Orange = Attention, Rouge = Critique. Simple et efficace. Tout le monde l'utilise maintenant."</p>
+
+                    <p><strong>3. Base de connaissances interactive (2021)</strong><br>
+                    "Les nouveaux perdaient du temps à chercher des infos. Antoine a créé une base de connaissances avec toutes les solutions aux problèmes récurrents. Temps de formation divisé par 2."</p>
+
+                    <p><strong>4. Scripts d'automatisation quotidiens</strong><br>
+                    "Petit bots pour la communauté. Des trucs qu'il fait le week-end pour rendre service."</p>
+
+                    <p><span class="emphasis">🐰 SECRET DÉCOUVERT: "Le Maker" - Antoine construit des outils qui n'existaient pas.</span></p>
+
+                    <p>Pattern clair: Il identifie un problème, crée une solution, la partage.</p>
+                `,
+                choices: [
+                    { text: "Imaginer son impact chez nous", next: "potential_impact", info: 20, trust: 15 },
+                    { text: "Voir ses motivations pour bouger", next: "motivations", info: 15 },
+                    { text: "Chercher encore des secrets", next: "deep_dive", secret: true },
+                    { text: "Préparer le recrutement", next: "recruitment_phase" }
+                ]
+            },
+
+            motivations: {
+                chapter: "Chapitre 7: Les Motivations",
+                text: `
+                    <p>Vous trouvez des notes d'une discussion informelle avec Antoine:</p>
+
+                    <p><span class="emphasis">POURQUOI IL EST "OUVERT AUX OPPORTUNITÉS":</span></p>
+
+                    <p><strong>Ce qu'il cherche:</strong></p>
+
+                    <p>1. <span class="emphasis">Nouveaux défis techniques</span><br>
+                    "Après 14 ans dans la logistique, je maîtrise bien. J'aimerais découvrir de nouveaux systèmes, de nouvelles technologies, des problèmes que je n'ai jamais vus."</p>
+
+                    <p>2. <span class="emphasis">Impact plus large</span><br>
+                    "J'ai optimisé Savoye. J'aimerais maintenant partager cette expertise ailleurs. Voir si mes méthodes fonctionnent dans d'autres contextes."</p>
+
+                    <p>3. <span class="emphasis">Équipe dynamique</span><br>
+                    "Une équipe qui aime apprendre. Qui partage. Où je peux apprendre des autres aussi. Pas juste être 'l'expert' mais faire partie d'une vraie équipe technique."</p>
+
+                    <p>4. <span class="emphasis">Liberté d'innovation</span><br>
+                    "Continuer à créer des outils. Automatiser. Améliorer. Pas juste maintenir l'existant."</p>
+
+                    <p><strong>Ce qu'il ne veut PAS:</strong><br>
+                    • Manager (il veut rester technique)<br>
+                    • Politique d'entreprise toxique<br>
+                    • Routine pure sans challenge<br>
+                    • Équipe qui ne partage pas</p>
+
+                    <p>Note: "Il ne changera pas juste pour l'argent. Il veut du sens."</p>
+                `,
+                choices: [
+                    { text: "Vérifier si notre poste correspond", next: "job_match", info: 20 },
+                    { text: "Préparer l'approche de recrutement", next: "recruitment_strategy", info: 15 },
+                    { text: "Évaluer notre offre vs ses attentes", next: "offer_evaluation", info: 15 },
+                    { text: "Lancer le processus de contact", next: "recruitment_phase" }
+                ]
+            },
+
+            potential_impact: {
+                chapter: "Chapitre 7: L'Impact Potentiel",
+                text: `
+                    <p>Vous imaginez ce qu'Antoine pourrait apporter à votre entreprise...</p>
+
+                    <p><span class="emphasis">SCÉNARIO: Antoine rejoint votre équipe</span></p>
+
+                    <p><strong>Mois 1-3: Audit et compréhension</strong><br>
+                    • Il analyse tous vos systèmes<br>
+                    • Identifie les points faibles<br>
+                    • Détecte les inefficacités<br>
+                    • Crée un plan d'action</p>
+
+                    <p><strong>Mois 3-6: Mise en place monitoring</strong><br>
+                    • Adapte son système de monitoring proactif<br>
+                    • Réduit les incidents de 50-70% (basé sur Savoye)<br>
+                    • Améliore la satisfaction client<br>
+                    • L'équipe support respire</p>
+
+                    <p><strong>Mois 6-12: Optimisations</strong><br>
+                    • Automatise les tâches répétitives<br>
+                    • Crée des outils pour l'équipe<br>
+                    • Forme les juniors<br>
+                    • Améliore les processus</p>
+
+                    <p><strong>An 2+: Innovation</strong><br>
+                    • Nouvelles solutions techniques<br>
+                    • Vision transverse sur tous les systèmes<br>
+                    • Référent technique reconnu<br>
+                    • Impact mesurable sur les KPIs</p>
+
+                    <p><span class="emphasis">ROI estimé:</span> -120K€ en coûts support (basé sur Savoye), +20% satisfaction client, équipe plus efficace.</p>
+
+                    <p>Vous vous dites: "On DOIT recruter cette personne."</p>
+                `,
+                choices: [
+                    { text: "Vérifier si notre poste est à la hauteur", next: "job_match", info: 15 },
+                    { text: "Préparer une stratégie de recrutement", next: "recruitment_strategy", info: 20 },
+                    { text: "Foncer et le contacter immédiatement", next: "recruitment_phase", trust: 5 },
+                    { text: "Chercher encore plus d'informations", next: "deep_dive" }
+                ]
+            },
+
+            deep_dive: {
+                chapter: "Chapitre 8: Recherches Approfondies",
+                text: `
+                    <p>Vous décidez de creuser encore plus profond...</p>
+
+                    <p>Vous trouvez un vieux blog technique (2020) où Antoine partage:</p>
+
+                    <p><span class="emphasis">"Comment j'ai appris à lire les traces LMWCS"</span></p>
+
+                    <p>"Quand j'ai commencé chez Savoye en 2012, les traces LMWCS me terrorisaient. 10 000 lignes par minute, codes cryptiques, format propriétaire. Les seniors me disaient 'Tu verras, on s'y fait jamais vraiment.'"</p>
+
+                    <p>"J'ai décidé de les apprivoiser. J'ai passé mes soirées à les analyser. J'ai créé des scripts pour les parser. J'ai trouvé des patterns. J'ai compris la logique."</p>
+
+                    <p>"Aujourd'hui, 8 ans plus tard, je les lis comme de la prose. Et j'ai formé 12 personnes qui savent maintenant les lire aussi. Le mythe de 'l'illisibilité' vient juste du manque de méthode."</p>
+
+                    <p><span class="emphasis">🐰 SECRET DÉCOUVERT: "La Persévérance" - Ce qui semble impossible, Antoine le rend possible.</span></p>
+
+                    <p>Commentaires sur le blog:<br>
+                    • "Merci Antoine, grâce à tes tutos j'y arrive maintenant!"<br>
+                    • "La légende enseigne. Respect."<br>
+                    • "Tu as démystifié LMWCS pour toute une génération."</p>
+                `,
+                choices: [
+                    { text: "Suffisamment d'infos - Passer au recrutement", next: "recruitment_phase", info: 10 },
+                    { text: "Vérifier la compatibilité avec notre poste", next: "job_match", info: 15 },
+                    { text: "Préparer une stratégie personnalisée", next: "recruitment_strategy", info: 20 },
+                    { text: "Voir ses centres d'intérêt personnels", next: "personal_interests", secret: true }
+                ]
+            },
+
+            personal_interests: {
+                chapter: "Chapitre 8: La Personne",
+                text: `
+                    <p>Vous découvrez une section souvent oubliée: les centres d'intérêt.</p>
+
+                    <p><span class="emphasis">QUI EST ANTOINE EN DEHORS DU TRAVAIL?</span></p>
+
+                    <p><strong>Passions:</strong></p>
+
+                    <p>• <span class="emphasis">Bots industrialisés</span><br>
+                    "Créer des petits bots pour automatiser des tâches. Pour moi, pour la communauté. C'est mon côté bricoleur numérique."</p>
+
+                    <p>• <span class="emphasis">Chine et brocante</span><br>
+                    "J'aime chercher des objets avec une histoire. Restaurer des vieux trucs. Leur donner une seconde vie. Comme le code legacy, en fait."</p>
+
+                    <p>• <span class="emphasis">Animation d'équipe</span><br>
+                    "Organiser des events pour l'équipe. Team building, partage de connaissances, moments conviviaux. L'équipe c'est important."</p>
+
+                    <p>• <span class="emphasis">Veille technologique</span><br>
+                    "Toujours apprendre. Nouvelles technos, nouvelles méthodes. Rester curieux."</p>
+
+                    <p>Vous réalisez: C'est pas juste un CV. C'est une personne complète. Quelqu'un qui restaure des objets, automatise des processus, et soude des équipes.</p>
+
+                    <p><span class="emphasis">🐰 SECRET ULTIME DÉCOUVERT: "L'Humain" - Derrière l'expert, il y a une personne authentique.</span></p>
+                `,
+                choices: [
+                    { text: "Préparer une approche personnalisée", next: "recruitment_strategy", info: 20, trust: 20 },
+                    { text: "Passer au recrutement avec cette vision complète", next: "recruitment_phase", info: 10 },
+                    { text: "Vérifier une dernière fois le match avec notre poste", next: "job_match" }
+                ]
+            },
+
+            job_match: {
+                chapter: "Chapitre 9: L'Adéquation",
+                text: `
+                    <p>Vous analysez l'adéquation entre Antoine et votre poste...</p>
+
+                    <p><span class="emphasis">NOTRE BESOIN vs PROFIL ANTOINE:</span></p>
+
+                    <p><strong>Nous cherchons:</strong> Expert Technique multi-systèmes ✅<br>
+                    <strong>Antoine est:</strong> Expert WMS/WCS/TMS/OMS avec vision transverse</p>
+
+                    <p><strong>Nous avons besoin:</strong> Quelqu'un qui résout les problèmes complexes ✅<br>
+                    <strong>Antoine:</strong> 2847 bugs résolus, spécialiste LMWCS</p>
+
+                    <p><strong>Nous voulons:</strong> Proactivité et initiative ✅<br>
+                    <strong>Antoine:</strong> Monitoring proactif, bots automatisés, innovations constantes</p>
+
+                    <p><strong>Nous souhaitons:</strong> Esprit d'équipe et partage ✅<br>
+                    <strong>Antoine:</strong> Formation juniors, outils partagés, animation équipe</p>
+
+                    <p><strong>Nos défis:</strong> Optimiser nos systèmes, réduire les incidents ✅<br>
+                    <strong>Track record Antoine:</strong> -67% incidents, -120K€ coûts, +21pts satisfaction</p>
+
+                    <p><span class="emphasis">MATCH: 98%</span></p>
+
+                    <p>Seule question: Notre offre sera-t-elle assez attractive?</p>
+                `,
+                choices: [
+                    { text: "Préparer l'offre et la stratégie", next: "recruitment_strategy", info: 15 },
+                    { text: "Évaluer notre package vs marché", next: "offer_evaluation", info: 10 },
+                    { text: "Lancer le contact maintenant", next: "recruitment_phase", trust: 10 }
+                ]
+            },
+
+            recruitment_strategy: {
+                chapter: "Chapitre 10: La Stratégie",
+                text: `
+                    <p>Vous préparez votre stratégie de recrutement...</p>
+
+                    <p><span class="emphasis">PLAN D'ACTION:</span></p>
+
+                    <p><strong>Phase 1: Premier contact</strong><br>
+                    • Message LinkedIn personnalisé<br>
+                    • Mentionner sa vision transverse (il est fier de ça)<br>
+                    • Parler des défis techniques, pas juste du salaire<br>
+                    • Montrer qu'on a fait nos devoirs</p>
+
+                    <p><strong>Phase 2: Appel découverte</strong><br>
+                    • Comprendre ses vrais besoins<br>
+                    • Présenter nos challenges techniques<br>
+                    • Parler innovation et liberté de créer<br>
+                    • Mention de l'équipe (esprit de partage)</p>
+
+                    <p><strong>Phase 3: Entretien technique</strong><br>
+                    • Lui poser des cas concrets<br>
+                    • Voir sa méthode de résolution<br>
+                    • Discuter de nos systèmes<br>
+                    • Imaginer ensemble les optimisations possibles</p>
+
+                    <p><strong>Phase 4: Rencontre d'équipe</strong><br>
+                    • Le présenter à l'équipe technique<br>
+                    • Vérifier le fit culturel<br>
+                    • Montrer nos projets en cours<br>
+                    • L'équipe doit l'apprécier (c'est important pour lui)</p>
+
+                    <p><strong>Phase 5: Offre</strong><br>
+                    • Package compétitif<br>
+                    • Insister sur les défis et l'impact<br>
+                    • Liberté d'innover<br>
+                    • Équipe collaborative</p>
+
+                    <p>Prêt à lancer le processus?</p>
+                `,
+                choices: [
+                    { text: "Parfait - Contacter Antoine maintenant!", next: "first_contact", trust: 20 },
+                    { text: "Vérifier une dernière fois notre offre", next: "offer_evaluation" },
+                    { text: "Revoir tous les éléments", next: "final_review", info: 10 }
+                ]
+            },
+
+            recruitment_phase: {
+                chapter: "Chapitre 10: Le Contact",
+                text: `
+                    <p>Vous décidez de passer à l'action. Il est temps de contacter Antoine.</p>
+
+                    <p>Vous rédigez un message LinkedIn:</p>
+
+                    <p><span class="emphasis">"Bonjour Antoine,</span></p>
+
+                    <p>Je suis ${gameState.info > 50 ? 'tombé sur votre profil et j\'ai été impressionné par votre parcours' : 'à la recherche d\'un Expert Technique et votre nom revient souvent'}.</p>
+
+                    ${gameState.info > 80 ? '<p>Votre vision transverse sur les systèmes logistiques et votre approche proactive (notamment le monitoring que vous avez mis en place) sont exactement ce que nous recherchons.</p>' : ''}
+
+                    ${gameState.trust > 70 ? '<p>Plusieurs personnes m\'ont parlé de vous avec beaucoup d\'enthousiasme. Votre réputation vous précède!</p>' : ''}
+
+                    <p>Nous avons des défis techniques passionnants qui pourraient vous intéresser. Seriez-vous ouvert à une discussion?</p>
+
+                    <p>Bien cordialement"</p>
+
+                    <p>Vous hésitez avant d'appuyer sur 'Envoyer'...</p>
+
+                    <p>Voulez-vous vraiment lancer le processus?</p>
+                `,
+                choices: [
+                    { text: "OUI - Envoyer le message!", next: "contact_sent" },
+                    { text: "Attendre - Préparer mieux l'approche", next: "recruitment_strategy" },
+                    { text: "Revoir tous les éléments d'abord", next: "final_review" }
+                ]
+            },
+
+            contact_sent: {
+                chapter: "Épilogue: Décision",
+                text: `
+                    <p>Vous appuyez sur 'Envoyer'.</p>
+
+                    <p>Message envoyé à 10:47.</p>
+
+                    <p>10:52 - Antoine a vu le message.</p>
+
+                    <p>10:54 - Il tape une réponse...</p>
+
+                    <p>10:55 - Réponse reçue:</p>
+
+                    <p><span class="emphasis">"Bonjour,</span></p>
+
+                    <p>${gameState.trust > 70 && gameState.info > 80 ?
+                        'Merci pour ce message détaillé. Je vois que vous avez pris le temps de comprendre mon profil, j\'apprécie. Les défis techniques m\'intéressent toujours. Quand pourrait-on en discuter?' :
+                        gameState.info > 50 ?
+                        'Merci pour votre message. Je serais effectivement ouvert à une discussion. Pouvez-vous m\'en dire plus sur vos challenges?' :
+                        'Merci pour votre message. Je reçois plusieurs propositions en ce moment. Qu\'est-ce qui différencie votre offre?'}</p>
+
+                    <p>Cordialement,<br>Antoine"</p>
+
+                    <p>La suite dépendra de votre préparation...</p>
+                `,
+                choices: [
+                    { text: "Voir mon score final", next: gameState.trust > 70 && gameState.info > 80 ? "ending_perfect" :
+                                                          gameState.info > 50 ? "ending_good" : "ending_average" }
+                ]
+            },
+
+            // Différentes fins selon les choix
+            ending_perfect: {
+                chapter: "FIN PARFAITE",
+                ending: true,
+                text: `
+                    <div class="ending">
+                        <h2>🏆 RECRUTEMENT PARFAIT 🏆</h2>
+
+                        <p>Grâce à votre préparation minutieuse et votre approche respectueuse, vous avez:</p>
+
+                        <p>✅ Compris en profondeur le profil d'Antoine<br>
+                        ✅ Identifié ses vraies motivations<br>
+                        ✅ Découvert ses innovations et sa personnalité<br>
+                        ✅ Gagné sa confiance dès le premier message</p>
+
+                        <p><span class="emphasis">3 MOIS PLUS TARD...</span></p>
+
+                        <p>Antoine a rejoint votre équipe. Comme prévu:</p>
+
+                        <p>• Il a mis en place un monitoring proactif adapté<br>
+                        • Les incidents ont chuté de 65%<br>
+                        • L'équipe est formée et autonome<br>
+                        • Il a créé 5 nouveaux outils d'automatisation<br>
+                        • La satisfaction client a bondi de 23 points<br>
+                        • Il est devenu le référent technique de l'entreprise</p>
+
+                        <p>Votre patron vous félicite: <span class="emphasis">"Meilleur recrutement de l'année. Comment as-tu su qu'il était The One?"</span></p>
+
+                        <p>Vous souriez. Vous aviez fait vos devoirs.</p>
+
+                        <p><strong>SCORE FINAL:</strong></p>
+                        <p>Informations: ${gameState.info}/100</p>
+                        <p>Confiance: ${gameState.trust}/100</p>
+                        <p>Secrets: ${gameState.secrets}/3</p>
+
+                        ${createMirrorContact()}
+
+                        <button class="restart-btn" onclick="location.reload()">🔄 Rejouer</button>
+                    </div>
+                `
+            },
+
+            ending_good: {
+                chapter: "BONNE FIN",
+                ending: true,
+                text: `
+                    <div class="ending">
+                        <h2>✅ BON RECRUTEMENT ✅</h2>
+
+                        <p>Vous avez fait un bon travail de préparation.</p>
+
+                        <p>Antoine est intéressé, mais vous êtes en compétition avec d'autres entreprises qui l'ont aussi approché.</p>
+
+                        <p><span class="emphasis">2 SEMAINES PLUS TARD...</span></p>
+
+                        <p>Après plusieurs entretiens, Antoine vous rejoint. Il hésite entre votre offre et une autre, mais votre équipe et vos challenges l'ont convaincu.</p>
+
+                        <p>Les résultats sont positifs:<br>
+                        • Monitoring proactif en place<br>
+                        • Réduction des incidents<br>
+                        • Équipe satisfaite<br>
+                        • Améliorations continues</p>
+
+                        <p>C'est une réussite, même si vous auriez pu mieux préparer votre approche initiale.</p>
+
+                        <p><strong>SCORE FINAL:</strong></p>
+                        <p>Informations: ${gameState.info}/100</p>
+                        <p>Confiance: ${gameState.trust}/100</p>
+                        <p>Secrets: ${gameState.secrets}/3</p>
+
+                        <p><strong>Conseil:</strong> Rejouez pour découvrir tous les secrets et obtenir la fin parfaite!</p>
+
+                        ${createMirrorContact()}
+
+                        <button class="restart-btn" onclick="location.reload()">🔄 Rejouer</button>
+                    </div>
+                `
+            },
+
+            ending_average: {
+                chapter: "FIN MOYENNE",
+                ending: true,
+                text: `
+                    <div class="ending">
+                        <h2>⚠️ RECRUTEMENT RATÉ ⚠️</h2>
+
+                        <p>Vous avez contacté Antoine trop rapidement, sans assez de préparation.</p>
+
+                        <p><span class="emphasis">1 SEMAINE PLUS TARD...</span></p>
+
+                        <p>Antoine vous répond poliment qu'il a accepté une autre offre. Une entreprise qui a pris le temps de comprendre son profil et ses motivations.</p>
+
+                        <p>"Merci pour votre intérêt, mais j'ai choisi une opportunité qui correspond mieux à mes attentes actuelles."</p>
+
+                        <p>Vous avez perdu The One.</p>
+
+                        <p><strong>SCORE FINAL:</strong></p>
+                        <p>Informations: ${gameState.info}/100 (trop bas!)</p>
+                        <p>Confiance: ${gameState.trust}/100 (insuffisant!)</p>
+                        <p>Secrets: ${gameState.secrets}/3</p>
+
+                        <p><strong>Leçon:</strong> Un bon recrutement commence par une bonne préparation. Prenez le temps de comprendre le candidat avant de le contacter.</p>
+
+                        ${createMirrorContact()}
+
+                        <button class="restart-btn" onclick="location.reload()">🔄 Rejouer et réussir</button>
+                    </div>
+                `
+            },
+
+            // Missing nodes added
+            technical_posts: {
+                chapter: "Chapitre 3: Publications LinkedIn",
+                text: `
+                    <p>Vous parcourez les publications techniques d'Antoine sur LinkedIn.</p>
+
+                    <p><span class="emphasis">Publications récentes:</span></p>
+
+                    <p><strong>Post 1 (il y a 2 semaines):</strong><br>
+                    "Aujourd'hui, résolu un bug LMWCS qui bloquait la production depuis 3 jours. Temps de résolution: 27 minutes. 👓<br><br>
+                    Lesson learned: Toujours vérifier les logs en remontant au TMS, pas juste le WMS. La vision transverse fait la différence."<br>
+                    ❤️ 47 · 💬 12 commentaires</p>
+
+                    <p><strong>Post 2 (il y a 1 mois):</strong><br>
+                    "Partage: mon script de monitoring proactif est maintenant open source! 🤖<br>
+                    Détection automatique des patterns anormaux. N'hésitez pas à contribuer."<br>
+                    ❤️ 89 · 💬 23 commentaires · 12 partages</p>
+
+                    <p><strong>Post 3 (il y a 2 mois):</strong><br>
+                    "Fier d'annoncer ma promotion: Expert Technique! 🏆<br>
+                    13 ans chez Savoye, et l'aventure continue..."<br>
+                    ❤️ 156 · 💬 45 commentaires</p>
+
+                    <p>Les commentaires sont unanimes: "Bravo!", "Bien mérité!", "The One!"</p>
+                `,
+                choices: [
+                    { text: "Lire les recommandations", next: "references", info: 10, trust: 10 },
+                    { text: "Consulter le dossier confidentiel", next: "open_folder", info: 10 },
+                    { text: "Passer au recrutement", next: "recruitment_phase" }
+                ]
+            },
+
+            direct_message: {
+                chapter: "Chapitre 2: Message Direct",
+                text: `
+                    <p>Vous envoyez un message privé à Antoine sur LinkedIn sans préparation:</p>
+
+                    <p><span class="emphasis">"Bonjour, nous recrutons un Expert Technique. Intéressé?"</span></p>
+
+                    <p>...</p>
+
+                    <p>2 heures plus tard, réponse d'Antoine:</p>
+
+                    <p>"Bonjour,<br><br>
+                    Merci pour votre message. Je reçois effectivement plusieurs sollicitations en ce moment.<br><br>
+                    Pourriez-vous m'en dire plus sur:<br>
+                    • Le poste et les challenges techniques<br>
+                    • Votre entreprise et son écosystème<br>
+                    • Ce qui vous a intéressé dans mon profil<br><br>
+                    Cordialement,<br>
+                    Antoine"</p>
+
+                    <p>Vous réalisez que vous n'avez pas assez préparé votre approche. Votre jauge de confiance diminue.</p>
+                `,
+                choices: [
+                    { text: "Préparer mieux et consulter le dossier", next: "open_folder", trust: -5 },
+                    { text: "Rechercher plus d'informations", next: "call_contact" }
+                ]
+            },
+
+            personality: {
+                chapter: "Chapitre 3: La Personnalité",
+                text: `
+                    <p>Votre contact Marie vous parle de la personnalité d'Antoine:</p>
+
+                    <p>"<span class="emphasis">C'est quelqu'un de très humble</span>, malgré ses compétences exceptionnelles. Il ne se vante jamais. Quand on lui dit 'Tu es le seul à savoir faire ça', il répond toujours 'C'est juste une question de méthode, je peux vous apprendre.'"</p>
+
+                    <p>"Côté caractère: <span class="emphasis">pragmatique mais créatif</span>. Il cherche toujours la solution la plus simple qui marche. Pas de sur-engineering. 'La meilleure solution est celle qui marche', c'est sa devise."</p>
+
+                    <p>"<span class="emphasis">Curieux technique</span>: il teste tout. Docker, Go, nouvelles technos... Il apprend en continu. C'est un autodidacte dans l'âme."</p>
+
+                    <p>"Et surtout, <span class="emphasis">esprit d'équipe incroyable</span>. Il partage tout. Ses scripts, ses connaissances, son temps. Il a formé la moitié de l'équipe actuelle."</p>
+
+                    <p>"Seul défaut? Il est peut-être trop perfectionniste parfois. Mais c'est ce qui fait sa qualité."</p>
+                `,
+                choices: [
+                    { text: "En savoir plus sur ses compétences", next: "technical_skills", info: 10 },
+                    { text: "Comprendre ses motivations", next: "motivations", info: 15 },
+                    { text: "Consulter le dossier", next: "open_folder", trust: 10 }
+                ]
+            },
+
+            weaknesses: {
+                chapter: "Chapitre 4: Points Faibles",
+                text: `
+                    <p>Vous cherchez des points faibles dans le profil d'Antoine...</p>
+
+                    <p><span class="emphasis">ANALYSE CRITIQUE:</span></p>
+
+                    <p><strong>Perfectionnisme:</strong><br>
+                    Peut être très exigeant avec lui-même. Passe parfois plus de temps que nécessaire sur un problème pour trouver LA solution optimale.</p>
+
+                    <p><strong>Autonomie forte:</strong><br>
+                    A l'habitude de travailler seul sur des problèmes complexes. Pourrait avoir du mal dans un environnement très hiérarchisé où chaque décision nécessite validation.</p>
+
+                    <p><strong>Expertise spécialisée:</strong><br>
+                    13 ans chez Savoye = expertise profonde mais aussi spécialisée. Période d'adaptation nécessaire dans un nouvel environnement technique.</p>
+
+                    <p><strong>Salaire actuel:</strong><br>
+                    Expert Technique chez Savoye = package confortable. Faudra une offre attractive pour le faire bouger.</p>
+
+                    <p>Note: Ces "faiblesses" sont relatives. Dans le bon contexte, elles deviennent des forces.</p>
+                `,
+                choices: [
+                    { text: "Voir ses forces maintenant", next: "soft_skills", info: 10 },
+                    { text: "Évaluer le match avec notre poste", next: "job_match", info: 15 },
+                    { text: "Continuer les recherches", next: "deep_dive" }
+                ]
+            },
+
+            monitoring_article: {
+                chapter: "Chapitre 3: L'Article",
+                text: `
+                    <p>Vous trouvez l'article de blog interne Savoye (fuité):</p>
+
+                    <p><span class="emphasis">"L'Histoire du Monitoring Proactif - Par l'Équipe Support"</span></p>
+
+                    <p>"<strong>2017</strong>: Nous étions réactifs. Un client appelait, on corrigeait. Simple mais stressant."</p>
+
+                    <p>"<strong>2018</strong>: Antoine propose un projet 'fou': 'Et si on détectait les problèmes AVANT qu'ils n'arrivent?'<br>
+                    Management: 'Pas de budget.'<br>
+                    Antoine: 'OK, je le fais quand même.'"</p>
+
+                    <p>"<strong>Soirs et week-ends pendant 3 mois</strong>, il développe un système de monitoring qui analyse les patterns, détecte les anomalies, et alerte AVANT la panne."</p>
+
+                    <p>"<strong>Premiers résultats</strong>: -40% d'incidents en 2 mois.<br>
+                    Management: 'On officialise le projet.'<br>
+                    Antoine: 'Je vous l'avais dit.'"</p>
+
+                    <p>"<strong>Aujourd'hui</strong>: -67% d'incidents, +21 points satisfaction client, -120K€ de coûts support."</p>
+
+                    <p>"<span class="emphasis">Leçon</span>: Antoine ne demande pas la permission d'innover. Il innove, puis prouve."</p>
+
+                    <p><span class="emphasis">🐰 SECRET DÉCOUVERT: "L'Innovateur Persistant"</span></p>
+                `,
+                choices: [
+                    { text: "Voir d'autres innovations", next: "innovations", info: 20, secret: true },
+                    { text: "Comprendre ses compétences techniques", next: "technical_skills", info: 10 },
+                    { text: "Passer au recrutement", next: "recruitment_phase", trust: 15 }
+                ]
+            },
+
+            github: {
+                chapter: "Chapitre 3: Le GitHub",
+                text: `
+                    <p>Vous consultez le GitHub public d'Antoine.</p>
+
+                    <p><span class="emphasis">REPOSITORIES PUBLICS:</span></p>
+
+                    <p><strong>1. lmwcs-parser</strong> ⭐ 47 stars<br>
+                    "Parser pour traces LMWCS. Convertit le format propriétaire en JSON lisible."<br>
+                    Language: Python · Updated 2 months ago</p>
+
+                    <p><strong>2. proactive-monitoring</strong> ⭐ 89 stars<br>
+                    "Framework de monitoring proactif pour systèmes logistiques."<br>
+                    Language: Python, Bash · Updated 3 weeks ago</p>
+
+                    <p><strong>3. automation-scripts</strong> ⭐ 23 stars<br>
+                    "Collection de scripts d'automatisation pour WMS/WCS."<br>
+                    Language: Python, Shell · Updated 1 week ago</p>
+
+                    <p><strong>4. logistics-bots</strong> ⭐ 34 stars<br>
+                    "Bots Slack pour alertes logistiques automatisées."<br>
+                    Language: Python · Updated 2 months ago</p>
+
+                    <p>Contributions: 847 commits cette année<br>
+                    Langages: Python 62%, Shell 18%, JavaScript 12%, Go 8%</p>
+
+                    <p>Chaque repo a une documentation claire, des tests, et des exemples. Professionnel.</p>
+                `,
+                choices: [
+                    { text: "Analyser ses compétences techniques", next: "technical_skills", info: 15 },
+                    { text: "Voir ses projets personnels", next: "innovations", info: 10 },
+                    { text: "Retourner au dossier", next: "open_folder" }
+                ]
+            },
+
+            official_contact: {
+                chapter: "Chapitre 3: Contact Officiel",
+                text: `
+                    <p>Vous contactez officiellement Savoye RH.</p>
+
+                    <p>Réponse du DRH:</p>
+
+                    <p>"<span class="emphasis">Antoine JACROT?</span> Oh non, vous aussi...<br><br>
+                    Je vais être franc: c'est notre meilleur élément technique. Si vous le recrutez, vous nous faites très mal.<br><br>
+                    Mais je ne peux pas le retenir contre sa volonté. Il a une clause de mobilité.<br><br>
+                    Ce que je peux vous dire:<br>
+                    • <span class="emphasis">Irréprochable</span> professionnellement<br>
+                    • <span class="emphasis">Aucun conflit</span> jamais<br>
+                    • <span class="emphasis">Prisé</span> par les clients (certains le demandent nommément)<br>
+                    • <span class="emphasis">Respecté</span> par toute l'équipe<br><br>
+                    Si vous l'embauchez, prenez-en soin. C'est une perle rare.<br><br>
+                    PS: On sera probablement amenés à vous appeler un jour pour qu'il nous dépanne... 😅"</p>
+
+                    <p>Votre jauge de confiance augmente.</p>
+                `,
+                choices: [
+                    { text: "Consulter le dossier maintenant", next: "open_folder", trust: 15 },
+                    { text: "Comprendre ses motivations", next: "motivations", info: 10 },
+                    { text: "Préparer le recrutement", next: "recruitment_strategy", trust: 10 }
+                ]
+            },
+
+            premature_offer: {
+                chapter: "Chapitre 4: Erreur Tactique",
+                text: `
+                    <p>Vous préparez une offre immédiatement sans avoir assez d'informations...</p>
+
+                    <p><span class="emphasis">⚠️ ERREUR TACTIQUE</span></p>
+
+                    <p>Vous envoyez une offre standard: "Expert Technique - 55K€ - Télétravail partiel"</p>
+
+                    <p>Réponse d'Antoine 2 jours plus tard:</p>
+
+                    <p>"Bonjour,<br><br>
+                    Merci pour votre offre. Cependant:<br><br>
+                    • Je gagne déjà plus que votre proposition<br>
+                    • Vous ne mentionnez aucun challenge technique spécifique<br>
+                    • Votre message est très générique<br><br>
+                    Je ne cherche pas juste un nouveau poste, je cherche de <span class="emphasis">nouveaux défis</span>.<br><br>
+                    Cordialement,<br>
+                    Antoine"</p>
+
+                    <p>Votre jauge de confiance chute. Vous avez précipité les choses.</p>
+                `,
+                choices: [
+                    { text: "Comprendre ses vraies motivations", next: "motivations", info: 20, trust: -10 },
+                    { text: "Analyser mieux le profil", next: "deep_dive", trust: -10 },
+                    { text: "Abandonner (fin moyenne)", next: "ending_average" }
+                ]
+            },
+
+            skills_test: {
+                chapter: "Chapitre 5: Simulation de Test",
+                text: `
+                    <p>Vous imaginez tester les compétences d'Antoine...</p>
+
+                    <p><span class="emphasis">SCÉNARIO DE TEST:</span></p>
+
+                    <p><strong>Vous:</strong> "Antoine, voici une trace LMWCS. Un colis est bloqué. Pouvez-vous identifier le problème?"</p>
+
+                    <p>[Vous lui montrez 10 000 lignes de logs cryptiques]</p>
+
+                    <p><strong>Antoine</strong> (après 30 secondes): "Trouvé. Ligne 7834. Le WCS a envoyé une commande au convoyeur #7, mais le TMS en amont avait déjà marqué cette zone comme 'maintenance'. Conflit de communication entre WCS et TMS."</p>
+
+                    <p><strong>Vous</strong> (impressionné): "Comment avez-vous vu ça si vite?"</p>
+
+                    <p><strong>Antoine:</strong> "J'ai cherché les patterns. WCS dit 'OK', TMS dit 'NOK'. Quand il y a contradiction, c'est toujours un problème de synchro. Ensuite je remonte la chaîne d'événements."</p>
+
+                    <p><strong>Vous:</strong> "Et la solution?"</p>
+
+                    <p><strong>Antoine:</strong> "Court terme: reset du convoyeur. Long terme: ajouter une vérification de statut TMS avant envoi WCS. Je peux coder ça en 2h."</p>
+
+                    <p><span class="emphasis">RÉSULTAT: 10/10</span></p>
+
+                    <p>C'est bien The One.</p>
+                `,
+                choices: [
+                    { text: "Voir ses autres compétences", next: "soft_skills", info: 10 },
+                    { text: "Comprendre sa vision transverse", next: "transverse_vision", info: 15 },
+                    { text: "Passer au recrutement", next: "recruitment_phase", trust: 10 }
+                ]
+            },
+
+            concrete_examples: {
+                chapter: "Chapitre 6: Exemples Concrets",
+                text: `
+                    <p>Vous trouvez des cas concrets de résolutions de problèmes par Antoine:</p>
+
+                    <p><span class="emphasis">CAS 1 - CLIENT PHARMACEUTIQUE (2023):</span><br>
+                    Bug critique : perte de traçabilité sur 500 colis.<br>
+                    Équipes bloquées depuis 6h.<br>
+                    Antoine arrive, lit les traces : 45 min.<br>
+                    Cause : mise à jour OMS qui a cassé l'interface avec WMS.<br>
+                    Solution : rollback + patch. Tout résolu en 2h.</p>
+
+                    <p><span class="emphasis">CAS 2 - CLIENT E-COMMERCE (2022):</span><br>
+                    Ralentissements inexpliqués aux heures de pointe.<br>
+                    Antoine analyse : le WCS ralentit quand >1000 commandes/h.<br>
+                    Cause trouvée : requête SQL mal optimisée.<br>
+                    Solution : réindexation + requête refaite.<br>
+                    Résultat : +300% de performance.</p>
+
+                    <p><span class="emphasis">CAS 3 - FORMATION ÉQUIPE (2021):</span><br>
+                    3 juniors ne comprennent pas LMWCS.<br>
+                    Antoine crée un tutoriel interactif + sessions de formation.<br>
+                    Résultat : les 3 sont maintenant autonomes.</p>
+
+                    <p>Pattern clair : <span class="emphasis">Résout, Optimise, Transmet</span>.</p>
+                `,
+                choices: [
+                    { text: "Imaginer son impact chez nous", next: "potential_impact", info: 20 },
+                    { text: "Voir ses motivations", next: "motivations", info: 10 },
+                    { text: "Préparer le recrutement", next: "recruitment_phase" }
+                ]
+            },
+
+            offer_evaluation: {
+                chapter: "Chapitre 9: Évaluation de l'Offre",
+                text: `
+                    <p>Vous évaluez votre package vs ce qu'Antoine recherche...</p>
+
+                    <p><span class="emphasis">CE QUE VOUS OFFREZ:</span></p>
+
+                    <p><strong>Salaire:</strong> ${gameState.info > 70 ? 'Vous avez préparé un package compétitif basé sur son niveau Expert' : 'Vous n\'avez pas assez d\'info pour faire une offre adaptée'}</p>
+
+                    <p><strong>Challenges:</strong> ${gameState.info > 60 ? 'Vous pouvez présenter des problèmes techniques concrets qui l\'intéresseront' : 'Vous ne savez pas vraiment ce qui le motive techniquement'}</p>
+
+                    <p><strong>Équipe:</strong> ${gameState.trust > 60 ? 'Vous avez compris son besoin d\'équipe collaborative et apprenante' : 'Vous n\'avez pas assez creusé l\'aspect équipe'}</p>
+
+                    <p><strong>Liberté d\'innovation:</strong> ${gameState.info > 70 ? 'Vous savez qu\'il a besoin de pouvoir créer et innover' : 'Point non identifié'}</p>
+
+                    <p><span class="emphasis">SCORE D'ADÉQUATION: ${Math.min(100, gameState.info + gameState.trust) / 2}/100</span></p>
+
+                    ${gameState.info + gameState.trust > 140 ? '<p style="color: #48bb78;">Votre offre devrait l\'intéresser!</p>' : '<p style="color: #ff6b6b;">Vous devriez en savoir plus avant de contacter.</p>'}
+                `,
+                choices: [
+                    { text: "Préparer la stratégie de contact", next: "recruitment_strategy", info: 10 },
+                    { text: "Chercher plus d'informations", next: "deep_dive" },
+                    { text: "Foncer quand même", next: "recruitment_phase" }
+                ]
+            },
+
+            first_contact: {
+                chapter: "Chapitre 10: Premier Contact",
+                text: `
+                    <p>Vous êtes prêt. Stratégie en place. Message personnalisé rédigé.</p>
+
+                    <p>Vous cliquez sur "Envoyer"...</p>
+
+                    <p><span class="emphasis">MESSAGE ENVOYÉ:</span></p>
+
+                    <p>"Bonjour Antoine,<br><br>
+                    ${gameState.trust > 70 ? 'Plusieurs personnes m\'ont parlé de vous avec enthousiasme. ' : ''}${gameState.info > 80 ? 'Votre approche proactive du monitoring et votre vision transverse sur les systèmes logistiques ont particulièrement retenu mon attention.' : 'J\'ai été impressionné par votre profil.'}< br><br>
+                    Nous avons des défis techniques passionnants sur [vos systèmes] qui pourraient vous intéresser. ${gameState.info > 70 ? 'Nous cherchons quelqu\'un avec votre capacité à voir l\'ensemble de l\'écosystème.' : ''}<br><br>
+                    Seriez-vous ouvert à une discussion?<br><br>
+                    Cordialement"</p>
+
+                    <p>Envoyé à 14:23...</p>
+
+                    <p>14:27 - Vu ✓✓</p>
+
+                    <p>14:31 - Antoine tape...</p>
+                `,
+                choices: [
+                    { text: "Voir sa réponse", next: "contact_sent" }
+                ]
+            },
+
+            final_review: {
+                chapter: "Chapitre 10: Revue Finale",
+                text: `
+                    <p>Avant de contacter Antoine, vous faites une dernière revue...</p>
+
+                    <p><span class="emphasis">CHECKLIST:</span></p>
+
+                    <p>✓ Profil compris : ${gameState.info}/100<br>
+                    ${gameState.info > 80 ? '✅ Excellent' : gameState.info > 50 ? '⚠️ Moyen' : '❌ Insuffisant'}</p>
+
+                    <p>✓ Confiance établie : ${gameState.trust}/100<br>
+                    ${gameState.trust > 70 ? '✅ Solide' : gameState.trust > 50 ? '⚠️ Fragile' : '❌ Faible'}</p>
+
+                    <p>✓ Secrets découverts : ${gameState.secrets}/3<br>
+                    ${gameState.secrets === 3 ? '✅ Tous trouvés!' : gameState.secrets > 0 ? '⚠️ Partiels' : '❌ Aucun'}</p>
+
+                    <p><span class="emphasis">ÉLÉMENTS CLÉS À MENTIONNER:</span></p>
+
+                    ${gameState.info > 80 ? '<p>• Vision transverse et monitoring proactif<br>• Capacité unique sur LMWCS<br>• Besoin de challenges et innovation</p>' : '<p>• Vous manquez d\'éléments concrets...</p>'}
+
+                    <p><strong>Recommandation:</strong> ${gameState.info > 70 && gameState.trust > 60 ? 'Vous êtes prêt! Contactez-le.' : 'Creusez encore un peu avant de contacter.'}</p>
+                `,
+                choices: [
+                    { text: "OK, je suis prêt - On contacte!", next: "recruitment_phase" },
+                    { text: "Chercher encore des infos", next: "deep_dive" },
+                    { text: "Affiner la stratégie", next: "recruitment_strategy" }
+                ]
+            }
+        };
+
+        // Game functions
+        function updateStats() {
+            document.getElementById('info-score').textContent = gameState.info;
+            document.getElementById('trust-score').textContent = gameState.trust;
+            document.getElementById('secrets-found').textContent = `${gameState.secrets}/3`;
+
+            if (gameState.secrets > 0) {
+                document.getElementById('secret-indicator').style.display = 'block';
+            }
+        }
+
+        function loadNode(nodeId) {
+            const node = story[nodeId];
+            if (!node) return;
+
+            // Track visited nodes
+            if (!gameState.visitedNodes.includes(nodeId)) {
+                gameState.visitedNodes.push(nodeId);
+            }
+
+            // Update chapter
+            document.getElementById('chapter-number').textContent = node.chapter;
+
+            // Update story text
+            document.getElementById('story-text').innerHTML = node.text;
+
+            // Clear and rebuild choices
+            const choicesContainer = document.getElementById('choices');
+            choicesContainer.innerHTML = '';
+
+            if (node.ending) {
+                // No choices for ending nodes
+                return;
+            }
+
+            if (node.choices && node.choices.length > 0) {
+                const choiceTitle = document.createElement('div');
+                choiceTitle.className = 'choice-title';
+                choiceTitle.textContent = '--- Que faites-vous? ---';
+                choicesContainer.appendChild(choiceTitle);
+
+                node.choices.forEach(choice => {
+                    const button = document.createElement('button');
+                    button.className = 'choice-btn';
+                    button.textContent = choice.text;
+                    button.onclick = () => makeChoice(choice);
+                    choicesContainer.appendChild(button);
+                });
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function makeChoice(choice) {
+            // Update stats
+            if (choice.info) {
+                gameState.info = Math.min(100, gameState.info + choice.info);
+            }
+            if (choice.trust) {
+                gameState.trust = Math.max(0, Math.min(100, gameState.trust + choice.trust));
+            }
+            if (choice.secret) {
+                gameState.secrets = Math.min(3, gameState.secrets + 1);
+            }
+
+            updateStats();
+
+            // Load next node
+            if (choice.next) {
+                setTimeout(() => {
+                    loadNode(choice.next);
+                }, 300);
+            }
+        }
+
+        // Initialize game
+        loadNode('start');
+        updateStats();
+    </script>
+</body>
+</html>
